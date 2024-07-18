@@ -7,6 +7,7 @@ namespace musicShopProject.Service.Products.Repository;
 public class ProductRepository : IProductRepository
 {
     private readonly IMainConnector _mainConnector;
+
     public ProductRepository(IMainConnector mainConnector)
     {
         _mainConnector = mainConnector;
@@ -21,7 +22,7 @@ public class ProductRepository : IProductRepository
             $"@p_id, @p_name, @p_description, @p_createdatetime, null," +
             $"@p_price, @p_weight, @p_manufacturer, @p_quantity, @p_category," +
             $"@p_image, @p_status)" +
-            $"ON CONFLICT (id) " +
+            $"ON CONFLICT (id)" +
             $"DO UPDATE SET " +
             $"name = @p_name," +
             $"description = @p_description," +
@@ -35,7 +36,7 @@ public class ProductRepository : IProductRepository
             $"image  = @p_image," +
             $"status = @p_status";
 
-        var parameters = new NpgsqlParameter[]
+        NpgsqlParameter[] parameters =
         {
             new("p_id", blank.Id),
             new("p_name", blank.Name),

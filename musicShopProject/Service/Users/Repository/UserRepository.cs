@@ -2,7 +2,6 @@
 using musicShopProject.Service.Users.Repository.Converters;
 using musicShopProject.Service.Users.Repository.Models;
 using musicShopProject.Tools.DataBase.Interfaces;
-using musicShopProject.Tools.Extensions;
 using Npgsql;
 
 namespace musicShopProject.Service.Users.Repository;
@@ -11,6 +10,7 @@ namespace musicShopProject.Service.Users.Repository;
 public class UserRepository : IUserRepository
 {
     private readonly IMainConnector _mainConnector;
+
     public UserRepository(IMainConnector mainConnector)
     {
         _mainConnector = mainConnector;
@@ -18,23 +18,23 @@ public class UserRepository : IUserRepository
 
     public void Save(UserBlank.Validated validatedBlank)
     {
-        //TODO Вынести в переменные все {} 
-        String query = $"INSERT INTO users (id, login, passwordhash, createdatetime, updatedatetime, email)" +
-                       $"VALUES (@p_id, @p_login, @p_passwordhash, @p_createdatetime, null, @p_email)" +
-                       $"ON CONFLICT (id) DO UPDATE SET " +
-                       $"login = @p_login," +
-                       $"passwordhash = CASE WHEN @p_passwordbechanged THEN @p_passwordhash ELSE users.passwordhash END," +
-                       $"updatedatetime = @p_updatedatetime," +
-                       $"email = @p_email";
+        String query = @$"INSERT INTO users (id, login, passwordhash, createdatetime, updatedatetime, email)
+                       VALUES (@p_id, @p_login, @p_passwordhash, @p_createdatetime, null, @p_email)
+                       ON CONFLICT (id) DO UPDATE SET 
+                       login = @p_login,
+                       passwordhash = CASE WHEN @p_passwordbechanged THEN @p_passwordhash ELSE users.passwordhash END,
+                       updatedatetime = @p_updatedatetime,
+                       email = @p_email";
 
-        NpgsqlParameter[] parameters = new NpgsqlParameter[] {
+        NpgsqlParameter[] parameters = {
             new ("p_id", validatedBlank.Id),
             new ("p_login", validatedBlank.Login),
-            new ("p_passwordhash", validatedBlank.Password.GetHash()),
+            new ("p_passwordhash", validatedBlank.Password.Hash),
             new ("p_email", validatedBlank.Email),
-            new ("p_createdatetime",DateTime.UtcNow),
-            new ("p_updatedatetime",DateTime.UtcNow),
-            new ("p_passwordbechanged",validatedBlank.PasswordBeChanged)
+            //TODO сделать одну переменную dateTimeUtcNow
+            new ("p_createdatetime", DateTime.UtcNow),
+            new ("p_updatedatetime", DateTime.UtcNow),
+            new ("p_passwordbechanged", validatedBlank.PasswordBeChanged)
         };
 
         _mainConnector.ExecuteNonQuery(query, parameters);
@@ -44,12 +44,8 @@ public class UserRepository : IUserRepository
     {
         String query = "SELECT * FROM users WHERE login = @p_login";
 
-        NpgsqlParameter[] parametrs = new NpgsqlParameter[]
-        {
-            new("p_login", login)
-        };
-
-        UserDB? userDB = _mainConnector.Get<UserDB?>(query, parametrs);
+        NpgsqlParameter[] parameters = { new("p_login", login)};
+        UserDB? userDB = _mainConnector.Get<UserDB?>(query, parameters);
 
         return userDB?.ToUser();
     }
@@ -58,13 +54,13 @@ public class UserRepository : IUserRepository
     {
         String query = $"SELECT * FROM users WHERE email = @p_email AND passwordhash = @p_passwordhash";
 
-        NpgsqlParameter[] parametrs = new NpgsqlParameter[]
+        NpgsqlParameter[] parameters =
         {
             new("p_email", email),
             new ("p_passwordhash",passwordHash)
         };
 
-        UserDB? userDB = _mainConnector.Get<UserDB?>(query,parametrs);
+        UserDB? userDB = _mainConnector.Get<UserDB?>(query, parameters);
 
         return userDB?.ToUser();
     }
@@ -75,7 +71,7 @@ public class UserRepository : IUserRepository
                    " SET passwordhash = @p_passwordhash" +
                    " WHERE id = @p_id";
 
-        NpgsqlParameter[] parameters = new NpgsqlParameter[]
+        NpgsqlParameter[] parameters =
         {
             new("p_passwordhash", newPassword),
             new("p_id",id)
@@ -110,20 +106,23 @@ public class UserRepository : IUserRepository
         return userDB?.ToUser();
     }
 
+    //TODO убрать nullable
     public User[]? GetUsers(Guid[] ids)
     {
         String query = $"SELECT * FROM users WHERE id = ANY(@p_ids)";
 
         NpgsqlParameter parameter = new("p_ids",ids);
 
-        IEnumerable<UserDB>? userDBs = _mainConnector.GetArray<UserDB>(query, parameter);
+        User[] users = _mainConnector.GetArray<UserDB>(query, parameter)
+            .Select(u => u.ToUser()).ToArray();
 
-        return userDBs?.Select(userDB => userDB.ToUser()).ToArray();
+        return users; 
     }
 
+    //TODO так же 
     public User[] GetAllUsers()
     {
-        string query = "SELECT * FROM users";
+        String query = "SELECT * FROM users";
 
         IEnumerable<UserDB> userDBs = _mainConnector.GetArray<UserDB>(query);
 

@@ -27,22 +27,11 @@ public class UserService : IUserService
 
     public Result Register(UserBlank blank)
     {
+         blank.Id ??= Guid.NewGuid();
+
         Result validateResult = ValidateUserBlank(blank, out UserBlank.Validated validatedBlank);
         if (!validateResult.IsSuccess) return Result.Fail(validateResult.Errors);
 
-        Boolean isLoginUnique = IsUniqueLogin(validatedBlank.Login);
-        if (!isLoginUnique) return Result.Fail("Такой логин занят");
-
-        User[] users2 = _userRepository.GetAllUsers();
-
-        List<Guid> guids = new();
-
-        foreach (var user in users2)
-        {
-            guids.Add(user.Id);
-        }
-
-         User[] users = _userRepository.GetUsers(guids.ToArray());
         _userRepository.Save(validatedBlank);
 
         return Result.Success(); 
@@ -52,11 +41,25 @@ public class UserService : IUserService
     {
         validatedUser = null!;
 
+        if (blank.Id is not { } id) throw new Exception("ID null у пользователя");
+
+        User? existUser = GetUser(id);
+        Boolean isCreating = existUser is null;
+
         if (blank.Login.IsNullOrWhiteSpace()) return Result.Fail("Укажите логин");
         if (blank.Password.IsNullOrWhiteSpace() && blank.PasswordBeChanged) return Result.Fail("Укажите пароль");
         if (blank.Email.IsNullOrWhiteSpace()) return Result.Fail("Укажите почту");
 
-        validatedUser = new UserBlank.Validated(blank.Id!, blank.Login!, blank.Password!, blank.Email!, blank.PasswordBeChanged!);
+        Boolean isLoginUnique = IsUniqueLogin(blank.Login!);
+        if (!isLoginUnique) return Result.Fail("Такой логин занят");
+
+        Password password = new(
+            isCreating
+            ? blank.Password!
+            : blank.Password ?? existUser!.PasswordHash
+        );
+
+        validatedUser = new UserBlank.Validated(id, blank.Login!, password, blank.Email!, blank.PasswordBeChanged!);
 
         return Result.Success();
     }
@@ -65,6 +68,11 @@ public class UserService : IUserService
     {
         User? user = _userRepository.GetUser(login);
         return user is null;
+    }
+
+    public User? GetUser(Guid id)
+    {
+        return _userRepository.GetUser(id);
     }
 
     public Result UpdatePassword(String? email, String? oldPassword, String? newPassword)

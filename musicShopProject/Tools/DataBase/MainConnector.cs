@@ -29,7 +29,6 @@ public class MainConnector : IMainConnector
 
     public T[] GetArray<T>(String query, params NpgsqlParameter[] parameters)
     {
-
         DynamicParameters dynamicParameters = new();
         foreach (var parameter in parameters)
         {
@@ -49,7 +48,6 @@ public class MainConnector : IMainConnector
         connection.Open();
 
         using NpgsqlCommand command = connection.CreateCommand(query);
-
         foreach (var parameter in parameters)
         {
             command.AddParameter(parameter.ParameterName, parameter.Value);

@@ -7,5 +7,4 @@ public interface IProductService
 {
     Result AddProduct(ProductBlank blank);
     Result UpdateProduct();
-
 }

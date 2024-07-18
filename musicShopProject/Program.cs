@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore.Migrations;
 using musicShopProject;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
