@@ -34,22 +34,25 @@ public class ProductService : IProductService
         validatedProduct = null!;
 
         //TODO это exception 
-        if (!blank.Id.HasValue) return Result.Fail("id пуст");
+        if (!blank.Id.HasValue) throw new Exception("id пуст");
 
         if (blank.Name.IsNullOrWhiteSpace()) return Result.Fail("Укажите название товара");
         if (blank.Category.IsNullOrWhiteSpace()) return Result.Fail("Укажите категорию товара");
         if (blank.Description.IsNullOrWhiteSpace()) return Result.Fail("Укажите описание товара");
 
         if (!blank.Price.HasValue) return Result.Fail("Укажите цену");
+        if (blank.Price.Value <= 0) return Result.Fail("Цена не может быть меньше или равна 0");
         //TODO цена не может быть меньше или равна 0
 
         if (!blank.Weight.HasValue) return Result.Fail("Укажите вес");
+        if (blank.Weight.Value <= 0) return Result.Fail("Вес не может быть меньше или равен 0");
         //TODO вес не может быть меньше или равна 0
 
         if (blank.Image.IsNullOrWhiteSpace()) return Result.Fail("Добавьте фотографию");
         if (blank.Manufacturer.IsNullOrWhiteSpace()) return Result.Fail("Укажите производителя");
 
         if (!blank.Quantity.HasValue) return Result.Fail("Укажите количество");
+        if (blank.Quantity.Value < 0) return Result.Fail("Количество не может быть меньше 0");
         //TODO вес не может быть меньше 0
 
         if (blank.Status.IsNullOrWhiteSpace()) return Result.Fail("Укажите статус");
