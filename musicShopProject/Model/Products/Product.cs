@@ -10,13 +10,13 @@ public class Product
     public ProductStatus Status { get; }
     public Decimal Price { get; }
     public Decimal Weight { get; }
-    public String Category { get; }
+    public Int32 CategoryId { get; }
+    public Boolean IsHidden { get; }
 
     public Product(
         Guid id, String name, String description, 
-        String status, Decimal price, Decimal weight,
-        String category
-    )
+        ProductStatus status, Decimal price, Decimal weight,
+        Int32 categoryId, Boolean isHidden)
     {
         Id = id;
         Name = name;
@@ -24,6 +24,7 @@ public class Product
         Status = status;
         Price = price;
         Weight = weight;
-        Category = category;
+        CategoryId = categoryId;
+        IsHidden = isHidden;
     }
 }

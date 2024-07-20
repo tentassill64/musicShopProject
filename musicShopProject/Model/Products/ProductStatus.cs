@@ -2,7 +2,7 @@
 
 public enum ProductStatus
 {
-    ВПродаже = 1, 
-    ВременноНеВпродаже = 2,
-    Закончился = 3
+    OnSale = 1,
+    TemporarilyOutOfSale = 2,
+    Ended = 3
 }

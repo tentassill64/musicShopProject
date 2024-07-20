@@ -86,7 +86,7 @@ public class UserRepository : IUserRepository
 
         NpgsqlParameter[] parametrs =
         {
-            new("p_login", login),
+            new ("p_login", login),
             new ("p_passwordhash",passwordHash)
         };
 
@@ -107,7 +107,7 @@ public class UserRepository : IUserRepository
     }
 
     //TODO убрать nullable
-    public User[]? GetUsers(Guid[] ids)
+    public User[] GetUsers(Guid[] ids)
     {
         String query = $"SELECT * FROM users WHERE id = ANY(@p_ids)";
 
