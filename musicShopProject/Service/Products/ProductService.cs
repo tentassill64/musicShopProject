@@ -8,10 +8,12 @@ namespace musicShopProject.Service.Products;
 public class ProductService : IProductService
 {
     private readonly IProductRepository _productRepository;
+    private readonly IImageService _imageService;
 
-    public ProductService(IProductRepository productRepository)
+    public ProductService(IProductRepository productRepository, IImageService imageService)
     {
         _productRepository = productRepository;
+        _imageService = imageService;
     }
 
     public Result AddProduct(ProductBlank blank)
@@ -37,7 +39,7 @@ public class ProductService : IProductService
         if (!blank.Id.HasValue) throw new Exception("id пуст");
 
         if (blank.Name.IsNullOrWhiteSpace()) return Result.Fail("Укажите название товара");
-        if (blank.Category.IsNullOrWhiteSpace()) return Result.Fail("Укажите категорию товара");
+        if (!blank.CategoryId.HasValue) return Result.Fail("Укажите категорию товара");
         if (blank.Description.IsNullOrWhiteSpace()) return Result.Fail("Укажите описание товара");
 
         if (!blank.Price.HasValue) return Result.Fail("Укажите цену");
@@ -48,19 +50,23 @@ public class ProductService : IProductService
         if (blank.Weight.Value <= 0) return Result.Fail("Вес не может быть меньше или равен 0");
         //TODO вес не может быть меньше или равна 0
 
-        if (blank.Image.IsNullOrWhiteSpace()) return Result.Fail("Добавьте фотографию");
+        _imageService.Save(blank.Image, out String[] imagesPaths);
+        blank.Image = imagesPaths;
+
         if (blank.Manufacturer.IsNullOrWhiteSpace()) return Result.Fail("Укажите производителя");
 
         if (!blank.Quantity.HasValue) return Result.Fail("Укажите количество");
         if (blank.Quantity.Value < 0) return Result.Fail("Количество не может быть меньше 0");
         //TODO вес не может быть меньше 0
 
-        if (blank.Status.IsNullOrWhiteSpace()) return Result.Fail("Укажите статус");
+        if (!blank.Status.HasValue) return Result.Fail("Укажите статус");
+
+        if (!blank.IsHidden.HasValue) return Result.Fail("Укажите видимость");
 
         validatedProduct = new ProductBlank.Validated(
             blank.Id.Value!, blank.Name!, blank.Description!, blank.Price.Value!, 
-            blank.Category!, blank.Weight.Value!, blank.Manufacturer!, blank.Quantity.Value!,
-            blank.Image!, blank.Status!
+            blank.CategoryId.Value!, blank.Weight.Value!, blank.Manufacturer!, blank.Quantity.Value!,
+            blank.Image!, blank.Status.Value!, blank.IsHidden.Value!
         );
 
         return Result.Success();

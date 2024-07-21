@@ -7,5 +7,8 @@ public class UserDB
     public String Password { get; set; }
     public String Email { get; set; }
     public DateTime CreateDateTime { get; set; }
-    public DateTime? UpdateDateTime { get; set; }
+    public DateTime? ModifiedDateTime { get; set; }
+    public DateTime CreateDateTimeUtc { get; set; }
+    public DateTime? ModifiedDateTimeUtc { get; set; }
+    public Boolean IsRemoved { get; set; }
 }

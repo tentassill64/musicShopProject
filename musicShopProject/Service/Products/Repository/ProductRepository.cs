@@ -17,12 +17,12 @@ public class ProductRepository : IProductRepository
         String query = @"INSERT INTO product (
             id, name, description, createdatetime, updatedatetime,
             price, weight,manufacturer, quantity, 
-            category, image, status, createddatetimeutc, modifieddatetimeutc, 
+            categoryid, images, status, createddatetimeutc, modifieddatetimeutc, 
             isremoved, ishidden) 
             VALUES (
             @p_id, @p_name, @p_description, @p_datetime, null,
             @p_price, @p_weight, @p_manufacturer, @p_quantity, @p_category,
-            @p_image, @p_status, @p_datetimeutc, null, false, true) 
+            @p_images, @p_status, @p_datetimeutc, null, false, true) 
             ON CONFLICT (id) 
             DO UPDATE SET  
             name = @p_name, 
@@ -32,8 +32,8 @@ public class ProductRepository : IProductRepository
             weight = @p_weight, 
             manufacturer = @p_manufacturer, 
             quantity = @p_quantity, 
-            category = @p_category, 
-            image  = @p_image, 
+            categoryid = @p_category, 
+            images  = @p_images, 
             status = @p_status, 
             modifieddatetimeutc = @p_datetimeutc"; 
 
@@ -49,7 +49,7 @@ public class ProductRepository : IProductRepository
             new("p_manufacturer", blank.Manufacturer),
             new("p_quantity", blank.Quantity),
             new("p_category",blank.CategoryId),
-            new("p_image", blank.Image),
+            new("p_images", blank.Image),
             new("p_status", blank.Status)
         };
 

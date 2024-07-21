@@ -17,7 +17,8 @@ public static class ServiceConfigurator
         collection.AddSingleton<IUserRepository, UserRepository>();
         collection.AddSingleton<IProductService, ProductService>();
         collection.AddSingleton<IProductRepository, ProductRepository>();
-        
+        collection.AddSingleton<IImageService, ImageService>();
+
         IConfiguration configuration = new ConfigurationBuilder()
         .AddJsonFile($"appsettings.{environment}.json", optional: false)
         .Build();

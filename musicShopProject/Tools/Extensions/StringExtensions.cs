@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using System.Text;
 
 namespace musicShopProject.Tools.Extensions;
 
@@ -13,7 +14,7 @@ public static class StringExtensions
     {
         using MD5 md5 = MD5.Create();
 
-        byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+        byte[] inputBytes = Encoding.Unicode.GetBytes(input);
         byte[] hashBytes = md5.ComputeHash(inputBytes);
 
         return Convert.ToHexString(hashBytes);

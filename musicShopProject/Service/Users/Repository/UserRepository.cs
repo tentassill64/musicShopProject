@@ -18,12 +18,14 @@ public class UserRepository : IUserRepository
 
     public void Save(UserBlank.Validated validatedBlank)
     {
-        String query = @$"INSERT INTO users (id, login, passwordhash, createdatetime, updatedatetime, email)
-                       VALUES (@p_id, @p_login, @p_passwordhash, @p_createdatetime, null, @p_email)
+        String query = @$"INSERT INTO users (id, login, passwordhash, createdatetime, updatedatetime, email, createddatetimeutc, 
+                       modifieddatetimeutc, isremoved)
+                       VALUES (@p_id, @p_login, @p_passwordhash, @p_datetime, null, @p_email, @p_datetimeutc, null, false)
                        ON CONFLICT (id) DO UPDATE SET 
                        login = @p_login,
                        passwordhash = CASE WHEN @p_passwordbechanged THEN @p_passwordhash ELSE users.passwordhash END,
-                       updatedatetime = @p_updatedatetime,
+                       updatedatetime = @p_datetime,
+                       modifieddatetimeutc = @p_datetimeutc,
                        email = @p_email";
 
         NpgsqlParameter[] parameters = {
@@ -32,8 +34,8 @@ public class UserRepository : IUserRepository
             new ("p_passwordhash", validatedBlank.Password.Hash),
             new ("p_email", validatedBlank.Email),
             //TODO сделать одну переменную dateTimeUtcNow
-            new ("p_createdatetime", DateTime.UtcNow),
-            new ("p_updatedatetime", DateTime.UtcNow),
+            new ("p_datetime", DateTime.Now),
+            new ("p_datetimeutc", DateTime.UtcNow),
             new ("p_passwordbechanged", validatedBlank.PasswordBeChanged)
         };
 
