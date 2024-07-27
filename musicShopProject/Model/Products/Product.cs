@@ -1,6 +1,4 @@
-﻿using musicShopProject.Model.Products;
-
-namespace musicShopProject.Model.product;
+﻿namespace musicShopProject.Model.Products;
 
 public class Product
 {
@@ -10,8 +8,12 @@ public class Product
     public ProductStatus Status { get; }
     public Decimal Price { get; }
     public Decimal Weight { get; }
+    //TODO Guid вместо int32
     public Int32 CategoryId { get; }
     public Boolean IsHidden { get; }
+
+    //    public Int32? Quantity { get; set; }
+    //    public String[]? Image {  get; set; }
 
     public Product(
         Guid id, String name, String description, 

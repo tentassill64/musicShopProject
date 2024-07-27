@@ -1,52 +1,49 @@
 ﻿using musicShopProject.Tools.Types;
-using System;
 using System.Net;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace musicShopProject.Service.Products
+namespace musicShopProject.Service.Products;`1
+
+public class ImageService : IImageService
 {
-    public class ImageService : IImageService
+    private readonly IWebHostEnvironment _environment;
+
+    public ImageService(IWebHostEnvironment environment)
     {
-        private readonly IWebHostEnvironment _environment;
+        _environment = environment;
+    }
+    public Result Save(String[] images, out String[] imagesPaths)
+    {
+        imagesPaths = null!;
 
-        public ImageService(IWebHostEnvironment environment)
+        Result result = ValidateImages(images);
+        if(!result.IsSuccess) return Result.Fail(result.ErrorsAsString);
+
+        List<String> imagePaths = new();
+
+        foreach (String image in images)
         {
-            _environment = environment;
-        }
-        public Result Save(String[] images, out String[] imagesPaths)
-        {
-            imagesPaths = null!;
+            using WebClient webClient = new();
 
-            Result result = ValidateImages(images);
-            if(!result.IsSuccess) return Result.Fail(result.ErrorsAsString);
+            Byte[] imageBytes = webClient.DownloadData(image);
 
-            List<string> imagePaths = new();
+            String fileName = Guid.NewGuid().ToString() + ".png";
 
-            foreach (String image in images)
-            {
-                using WebClient webClient = new();
+            File.WriteAllBytes(_environment.WebRootPath + "/img/" + fileName, imageBytes);
 
-                byte[] imageBytes = webClient.DownloadData(image);
-
-                String fileName = Guid.NewGuid().ToString() + ".png";
-
-                File.WriteAllBytes(_environment.WebRootPath + "/img/" + fileName, imageBytes);
-
-                imagePaths.Add(_environment.WebRootPath + "/img/" + fileName);
-            }
-
-            imagesPaths = imagePaths.ToArray();
-
-            return Result.Success();
+            imagePaths.Add(_environment.WebRootPath + "/img/" + fileName);
         }
 
-        private Result ValidateImages(String[] images)
+        imagesPaths = imagePaths.ToArray();
+
+        return Result.Success();
+    }
+
+    private Result ValidateImages(String[] images)
+    {
+        foreach (String image in images) 
         {
-            foreach (String image in images) 
-            {
-                if (!Uri.IsWellFormedUriString(image, UriKind.Absolute)) return Result.Fail($"Неправильная ссылка" + image);
-            }
-            return Result.Success();
+            if (!Uri.IsWellFormedUriString(image, UriKind.Absolute)) return Result.Fail($"Неправильная ссылка" + image);
         }
+        return Result.Success();
     }
 }

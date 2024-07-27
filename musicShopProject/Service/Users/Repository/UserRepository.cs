@@ -67,7 +67,7 @@ public class UserRepository : IUserRepository
         return userDB?.ToUser();
     }
 
-    public void UpdateUserPassword(Guid id, string newPassword)
+    public void UpdateUserPassword(Guid id, String newPassword)
     {
         String query = "UPDATE users" +
                    " SET passwordhash = @p_passwordhash" +
@@ -108,10 +108,10 @@ public class UserRepository : IUserRepository
         return userDB?.ToUser();
     }
 
-    //TODO убрать nullable
+    //TODO вынести в репозиторий 
     public User[] GetUsers(Guid[] ids)
     {
-        String query = $"SELECT * FROM users WHERE id = ANY(@p_ids)";
+        String query = "SELECT * FROM users WHERE id = ANY(@p_ids)";
 
         NpgsqlParameter parameter = new("p_ids",ids);
 
@@ -121,7 +121,6 @@ public class UserRepository : IUserRepository
         return users; 
     }
 
-    //TODO так же 
     public User[] GetAllUsers()
     {
         String query = "SELECT * FROM users";

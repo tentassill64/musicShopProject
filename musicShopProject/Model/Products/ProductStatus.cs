@@ -4,5 +4,5 @@ public enum ProductStatus
 {
     OnSale = 1,
     TemporarilyOutOfSale = 2,
-    Ended = 3
+    OutOfStock = 3
 }

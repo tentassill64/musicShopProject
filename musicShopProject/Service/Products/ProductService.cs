@@ -16,7 +16,13 @@ public class ProductService : IProductService
         _imageService = imageService;
     }
 
-    public Result AddProduct(ProductBlank blank)
+    public Result AddProduct(ProductBlank blank, Guid requestedUserId)
+    {
+        blank.Id ??= Guid.NewGuid();
+        return SaveProduct(blank, requestedUserId);
+    }
+
+    private Result SaveProduct(ProductBlank blank, Guid requestedUserId)
     {
         Result validateResult = ValidateProductBlank(blank, out ProductBlank.Validated validatedProduct);
         if (!validateResult.IsSuccess) return Result.Fail(validateResult.Errors);
@@ -26,49 +32,47 @@ public class ProductService : IProductService
         return Result.Success();
     }
 
-    public Result UpdateProduct()
-    {
-        throw new NotImplementedException();
-    }
-
     private Result ValidateProductBlank(ProductBlank blank, out ProductBlank.Validated validatedProduct)
     {
         validatedProduct = null!;
 
-        //TODO это exception 
-        if (!blank.Id.HasValue) throw new Exception("id пуст");
+        if (blank.Id is not {} id) throw new Exception("id продукта пуст");
 
         if (blank.Name.IsNullOrWhiteSpace()) return Result.Fail("Укажите название товара");
-        if (!blank.CategoryId.HasValue) return Result.Fail("Укажите категорию товара");
+        if (blank.CategoryId is not {} categoryId) return Result.Fail("Укажите категорию товара");
         if (blank.Description.IsNullOrWhiteSpace()) return Result.Fail("Укажите описание товара");
 
-        if (!blank.Price.HasValue) return Result.Fail("Укажите цену");
-        if (blank.Price.Value <= 0) return Result.Fail("Цена не может быть меньше или равна 0");
-        //TODO цена не может быть меньше или равна 0
+        if (blank.Price is not {} price) return Result.Fail("Укажите цену");
+        if (price <= 0) return Result.Fail("Цена не может быть меньше или равна 0");
 
-        if (!blank.Weight.HasValue) return Result.Fail("Укажите вес");
-        if (blank.Weight.Value <= 0) return Result.Fail("Вес не может быть меньше или равен 0");
-        //TODO вес не может быть меньше или равна 0
+        if (blank.Weight is not { } weight) return Result.Fail("Укажите вес");
+        if (weight <= 0) return Result.Fail("Вес не может быть меньше или равен 0");
 
+        //TODO не в валидации 
         _imageService.Save(blank.Image, out String[] imagesPaths);
         blank.Image = imagesPaths;
 
         if (blank.Manufacturer.IsNullOrWhiteSpace()) return Result.Fail("Укажите производителя");
 
+        // Перепиши на is not {}
         if (!blank.Quantity.HasValue) return Result.Fail("Укажите количество");
         if (blank.Quantity.Value < 0) return Result.Fail("Количество не может быть меньше 0");
-        //TODO вес не может быть меньше 0
 
         if (!blank.Status.HasValue) return Result.Fail("Укажите статус");
 
         if (!blank.IsHidden.HasValue) return Result.Fail("Укажите видимость");
 
         validatedProduct = new ProductBlank.Validated(
-            blank.Id.Value!, blank.Name!, blank.Description!, blank.Price.Value!, 
-            blank.CategoryId.Value!, blank.Weight.Value!, blank.Manufacturer!, blank.Quantity.Value!,
+            id, blank.Name!, blank.Description!, price,
+            categoryId, weight, blank.Manufacturer!, blank.Quantity.Value!,
             blank.Image!, blank.Status.Value!, blank.IsHidden.Value!
         );
 
         return Result.Success();
+    }
+
+    public Result UpdateProduct(ProductBlank blank, Guid requestedUserId)
+    {
+        return SaveProduct(blank, requestedUserId);
     }
 }

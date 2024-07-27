@@ -14,8 +14,8 @@ public static class StringExtensions
     {
         using MD5 md5 = MD5.Create();
 
-        byte[] inputBytes = Encoding.Unicode.GetBytes(input);
-        byte[] hashBytes = md5.ComputeHash(inputBytes);
+        Byte[] inputBytes = Encoding.Unicode.GetBytes(input);
+        Byte[] hashBytes = md5.ComputeHash(inputBytes);
 
         return Convert.ToHexString(hashBytes);
     }

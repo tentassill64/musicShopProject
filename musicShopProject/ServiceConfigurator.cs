@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using musicShopProject.Service;
+﻿using musicShopProject.Service;
 using musicShopProject.Service.Products;
 using musicShopProject.Service.Products.Repository;
 using musicShopProject.Service.Users;
@@ -13,11 +12,20 @@ public static class ServiceConfigurator
 {
     public static void Initialize(this IServiceCollection collection, String environment)
     {
+        #region Services
+
         collection.AddSingleton<IUserService, UserService>();
-        collection.AddSingleton<IUserRepository, UserRepository>();
         collection.AddSingleton<IProductService, ProductService>();
-        collection.AddSingleton<IProductRepository, ProductRepository>();
         collection.AddSingleton<IImageService, ImageService>();
+
+        #endregion Services
+
+        #region Repositories
+
+        collection.AddSingleton<IUserRepository, UserRepository>();
+        collection.AddSingleton<IProductRepository, ProductRepository>();
+
+        #endregion Repositories
 
         IConfiguration configuration = new ConfigurationBuilder()
         .AddJsonFile($"appsettings.{environment}.json", optional: false)

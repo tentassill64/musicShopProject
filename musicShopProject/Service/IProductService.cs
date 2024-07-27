@@ -5,6 +5,6 @@ namespace musicShopProject.Service;
 
 public interface IProductService
 {
-    Result AddProduct(ProductBlank blank);
-    Result UpdateProduct();
+    Result AddProduct(ProductBlank blank, Guid requestedUserId);
+    Result UpdateProduct(ProductBlank blank, Guid requestedUserId);
 }

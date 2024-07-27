@@ -6,7 +6,7 @@ public class Result
     public String[] Errors { get;}
     public String ErrorsAsString => String.Join(", ", Errors);
 
-    public Result(string[] errors)
+    public Result(String[] errors)
     {
         Errors = errors;
     }

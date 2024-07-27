@@ -8,7 +8,7 @@ public class MainConnector : IMainConnector
 {
     private String _connectionString { get; }
 
-    public MainConnector(string connectionString)
+    public MainConnector(String connectionString)
     {
         _connectionString = connectionString;
     }
@@ -16,7 +16,7 @@ public class MainConnector : IMainConnector
     public T? Get<T>(String query, params NpgsqlParameter[] parameters)
     {
         DynamicParameters dynamicParameters = new();
-        foreach (var parameter in parameters)
+        foreach (NpgsqlParameter parameter in parameters)
         {
             dynamicParameters.Add(parameter.ParameterName, parameter.Value, parameter.DbType, parameter.Direction, parameter.Size);
         }
@@ -30,7 +30,7 @@ public class MainConnector : IMainConnector
     public T[] GetArray<T>(String query, params NpgsqlParameter[] parameters)
     {
         DynamicParameters dynamicParameters = new();
-        foreach (var parameter in parameters)
+        foreach (NpgsqlParameter parameter in parameters)
         {
             dynamicParameters.Add(parameter.ParameterName, parameter.Value, parameter.DbType, parameter.Direction, parameter.Size);
         }
@@ -44,11 +44,12 @@ public class MainConnector : IMainConnector
 
     public void ExecuteNonQuery(String query, params NpgsqlParameter[] parameters)
     {
+        //TODO переделать
         using NpgsqlConnection connection = DataBaseFuncs.CreateConnection();
         connection.Open();
 
         using NpgsqlCommand command = connection.CreateCommand(query);
-        foreach (var parameter in parameters)
+        foreach (NpgsqlParameter parameter in parameters)
         {
             command.AddParameter(parameter.ParameterName, parameter.Value);
         }

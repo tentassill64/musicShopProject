@@ -1,6 +1,5 @@
-﻿using musicShopProject.Model.product;
+﻿using musicShopProject.Model.Products;
 using musicShopProject.Service.Products.Repository.Models;
-using System.Runtime.CompilerServices;
 
 namespace musicShopProject.Service.Products.Repository.Converters
 {
