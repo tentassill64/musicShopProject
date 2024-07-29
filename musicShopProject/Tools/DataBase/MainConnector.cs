@@ -21,7 +21,7 @@ public class MainConnector : IMainConnector
             dynamicParameters.Add(parameter.ParameterName, parameter.Value, parameter.DbType, parameter.Direction, parameter.Size);
         }
 
-        using NpgsqlConnection connection = DataBaseFuncs.CreateConnection();
+        using NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
         connection.Open();
 
         return connection.QueryFirstOrDefault<T>(query, dynamicParameters);
@@ -35,7 +35,7 @@ public class MainConnector : IMainConnector
             dynamicParameters.Add(parameter.ParameterName, parameter.Value, parameter.DbType, parameter.Direction, parameter.Size);
         }
 
-        using NpgsqlConnection connection = DataBaseFuncs.CreateConnection();
+        using NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
         connection.Open();
 
         return connection.Query<T>(query, dynamicParameters).ToArray();
@@ -44,11 +44,10 @@ public class MainConnector : IMainConnector
 
     public void ExecuteNonQuery(String query, params NpgsqlParameter[] parameters)
     {
-        //TODO переделать
-        using NpgsqlConnection connection = DataBaseFuncs.CreateConnection();
+        using NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
         connection.Open();
 
-        using NpgsqlCommand command = connection.CreateCommand(query);
+        using NpgsqlCommand command = new NpgsqlCommand(query, connection);
         foreach (NpgsqlParameter parameter in parameters)
         {
             command.AddParameter(parameter.ParameterName, parameter.Value);

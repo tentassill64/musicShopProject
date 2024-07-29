@@ -8,17 +8,15 @@ public class Product
     public ProductStatus Status { get; }
     public Decimal Price { get; }
     public Decimal Weight { get; }
-    //TODO Guid вместо int32
-    public Int32 CategoryId { get; }
+    public Guid CategoryId { get; }
     public Boolean IsHidden { get; }
-
-    //    public Int32? Quantity { get; set; }
-    //    public String[]? Image {  get; set; }
+    public Int32 Quantity { get; }
+    public String[] Images {  get; }
 
     public Product(
         Guid id, String name, String description, 
         ProductStatus status, Decimal price, Decimal weight,
-        Int32 categoryId, Boolean isHidden)
+        Guid categoryId, Boolean isHidden, Int32 quantity, String[] images)
     {
         Id = id;
         Name = name;
@@ -28,5 +26,7 @@ public class Product
         Weight = weight;
         CategoryId = categoryId;
         IsHidden = isHidden;
+        Quantity = quantity;
+        Images = images;
     }
 }

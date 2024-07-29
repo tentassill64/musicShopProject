@@ -48,24 +48,24 @@ public class ProductService : IProductService
         if (blank.Weight is not { } weight) return Result.Fail("Укажите вес");
         if (weight <= 0) return Result.Fail("Вес не может быть меньше или равен 0");
 
-        //TODO не в валидации 
-        _imageService.Save(blank.Image, out String[] imagesPaths);
-        blank.Image = imagesPaths;
+        if (blank.Images.Length < 0) return Result.Fail("Добавьте фотографии");
 
         if (blank.Manufacturer.IsNullOrWhiteSpace()) return Result.Fail("Укажите производителя");
 
-        // Перепиши на is not {}
-        if (!blank.Quantity.HasValue) return Result.Fail("Укажите количество");
-        if (blank.Quantity.Value < 0) return Result.Fail("Количество не может быть меньше 0");
+        if (blank.Quantity is not { } quantity) return Result.Fail("Укажите количество");
+        if (quantity < 0) return Result.Fail("Количество не может быть меньше 0");
 
-        if (!blank.Status.HasValue) return Result.Fail("Укажите статус");
+        if (blank.Status is not { } status) return Result.Fail("Укажите статус");
 
-        if (!blank.IsHidden.HasValue) return Result.Fail("Укажите видимость");
+        if (blank.IsHidden is not { } isHidden) return Result.Fail("Укажите видимость");
+        //TOASK
+        _imageService.Save(blank.Images, out String[] imagesPaths);
+        blank.Images = imagesPaths;
 
         validatedProduct = new ProductBlank.Validated(
             id, blank.Name!, blank.Description!, price,
-            categoryId, weight, blank.Manufacturer!, blank.Quantity.Value!,
-            blank.Image!, blank.Status.Value!, blank.IsHidden.Value!
+            categoryId, weight, blank.Manufacturer!, quantity,
+            blank.Images!, status, isHidden
         );
 
         return Result.Success();
