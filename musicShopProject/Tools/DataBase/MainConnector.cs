@@ -13,6 +13,23 @@ public class MainConnector : IMainConnector
         _connectionString = connectionString;
     }
 
+    public void ExecuteNonQuery(String query, params NpgsqlParameter[] parameters)
+    {
+        using NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
+        connection.Open();
+
+        using NpgsqlCommand command = new NpgsqlCommand(query, connection);
+        foreach (NpgsqlParameter parameter in parameters)
+        {
+            command.AddParameter(parameter.ParameterName, parameter.Value);
+        }
+
+        command.ExecuteNonQuery();
+
+        connection.Close();
+        connection.Dispose();
+    }
+
     public T? Get<T>(String query, params NpgsqlParameter[] parameters)
     {
         DynamicParameters dynamicParameters = new();
@@ -42,20 +59,11 @@ public class MainConnector : IMainConnector
 
     }
 
-    public void ExecuteNonQuery(String query, params NpgsqlParameter[] parameters)
+    public T[] GetAllArray<T>(String query)
     {
         using NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
         connection.Open();
 
-        using NpgsqlCommand command = new NpgsqlCommand(query, connection);
-        foreach (NpgsqlParameter parameter in parameters)
-        {
-            command.AddParameter(parameter.ParameterName, parameter.Value);
-        }
-
-        command.ExecuteNonQuery();
-
-        connection.Close();
-        connection.Dispose();
+        return connection.Query<T>(query).ToArray();
     }
 }

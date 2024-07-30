@@ -14,7 +14,7 @@ public class ProductRepository : IProductRepository
     }
     public void SaveProduct(ProductBlank.Validated blank, Guid requestedUserId)
     {
-        String query = @"INSERT INTO product (
+        String query = @"INSERT INTO products (
             id, name, description, 
             price, weight, manufacturer, quantity, 
             categoryid, images, status, createddatetimeutc, modifieddatetimeutc, 
