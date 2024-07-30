@@ -4,6 +4,6 @@ namespace musicShopProject.Service.Products.Repository
 {
     public interface IProductRepository
     {
-        void SaveProduct(ProductBlank.Validated blank);
+        void SaveProduct(ProductBlank.Validated blank, Guid requestedUserId);
     }
 }

@@ -33,7 +33,6 @@ public class UserRepository : IUserRepository
             new ("p_login", validatedBlank.Login),
             new ("p_passwordhash", validatedBlank.Password.Hash),
             new ("p_email", validatedBlank.Email),
-            //TODO сделать одну переменную dateTimeUtcNow
             new ("p_datetime", DateTime.Now),
             new ("p_datetimeutc", DateTime.UtcNow),
             new ("p_passwordbechanged", validatedBlank.PasswordBeChanged)
@@ -108,7 +107,6 @@ public class UserRepository : IUserRepository
         return userDB?.ToUser();
     }
 
-    //TODO вынести в репозиторий 
     public User[] GetUsers(Guid[] ids)
     {
         String query = "SELECT * FROM users WHERE id = ANY(@p_ids)";

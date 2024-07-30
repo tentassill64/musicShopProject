@@ -13,7 +13,7 @@ public partial class ProductBlank
     public String[]? Images {  get; set; }
     public Int32? Status { get; set; }
     public Boolean? IsHidden { get; set; }
-    public Guid? UserId { get; set; } //TOASK
+    /*public Guid? UserId { get; set; }*/ //TOASK
 }
 public partial class ProductBlank
 {
@@ -30,13 +30,13 @@ public partial class ProductBlank
         public String[] Images { get; }
         public Int32 Status { get; }
         public Boolean IsHidden { get; }
-        public Guid UserId { get; }
+        //public Guid UserId { get; }
 
         public Validated(
             Guid id, String name, String description, Decimal price, 
             Guid categoryId, Decimal weight, String manufacturer, 
-            Int32 quantity, String[] image, Int32 status, Boolean isHidden,
-            Guid userId
+            Int32 quantity, String[] image, Int32 status, Boolean isHidden
+            //Guid userId
         )
         {
             Id = id;
@@ -50,7 +50,7 @@ public partial class ProductBlank
             Images = image;
             Status = status;
             IsHidden = isHidden;
-            UserId = userId;
+            //UserId = userId;
         }
     }
 }

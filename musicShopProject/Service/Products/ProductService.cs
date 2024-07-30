@@ -27,7 +27,7 @@ public class ProductService : IProductService
         Result validateResult = ValidateProductBlank(blank, out ProductBlank.Validated validatedProduct);
         if (!validateResult.IsSuccess) return Result.Fail(validateResult.Errors);
 
-        _productRepository.SaveProduct(validatedProduct);
+        _productRepository.SaveProduct(validatedProduct, requestedUserId);
 
         return Result.Success();
     }
@@ -58,6 +58,7 @@ public class ProductService : IProductService
         if (blank.Status is not { } status) return Result.Fail("Укажите статус");
 
         if (blank.IsHidden is not { } isHidden) return Result.Fail("Укажите видимость");
+
         //TOASK
         _imageService.Save(blank.Images, out String[] imagesPaths);
         blank.Images = imagesPaths;

@@ -1,7 +1,7 @@
 ﻿using musicShopProject.Tools.Types;
 using System.Net;
 
-namespace musicShopProject.Service.Products;`1
+namespace musicShopProject.Service.Products;
 
 public class ImageService : IImageService
 {
@@ -28,9 +28,9 @@ public class ImageService : IImageService
 
             String fileName = Guid.NewGuid().ToString() + ".png";
 
-            File.WriteAllBytes(_environment.WebRootPath + "/img/" + fileName, imageBytes);
+            File.WriteAllBytes(_environment.WebRootPath + "\\img\\" + fileName, imageBytes);
 
-            imagePaths.Add(_environment.WebRootPath + "/img/" + fileName);
+            imagePaths.Add("\\wwwroot" + "\\img\\" + fileName);
         }
 
         imagesPaths = imagePaths.ToArray();

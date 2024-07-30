@@ -14,8 +14,8 @@ public class ProductController : ControllerBase
     }
 
     [HttpPost("product/add")]
-    public Result SaveProduct([FromBody] ProductBlank blank)
+    public Result SaveProduct([FromBody] ProductBlank blank, Guid userId)
     {
-        return _productService.AddProduct(blank, Guid.Empty);
+        return _productService.AddProduct(blank, userId);
     }
 }
