@@ -20,11 +20,23 @@ public class UserController : ControllerBase
        return _userService.Register(blank);
     }
     
-    public record LoginRequest(String? Login, String? Password);
+    public record LoginRequest(String? PhoneNumber, String? Password);
 
     [HttpPost("login")]
     public Result Login([FromBody] LoginRequest loginRequest)
     {
-        return _userService.Login(loginRequest.Login, loginRequest.Password);
+        return _userService.Login(loginRequest.PhoneNumber, loginRequest.Password);
+    }
+
+    [HttpGet("users/all")]
+    public User[] GetAllUsers()
+    {
+        return _userService.GetAllUsers();
+    }
+
+    [HttpGet("user/phone")]
+    public User? GetUser([FromQuery] String phoneNumber)
+    {
+       return _userService.GetUser(phoneNumber);
     }
 }

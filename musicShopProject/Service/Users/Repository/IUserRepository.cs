@@ -8,9 +8,9 @@ public interface IUserRepository
 
     User? GetUserByEmail(String email, String passwordHash);
 
-    User? GetUser(String login);
+    User? GetUser(String phoneNumber);
 
-    User? GetUserByLogin(String login, String passwordHash);
+    User? GetUserByPhoneNumber(String phoneNumber, String passwordHash);
 
     void UpdateUserPassword(Guid id, String newPassword);
 

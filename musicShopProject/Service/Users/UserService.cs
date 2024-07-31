@@ -14,12 +14,12 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public Result Login(String? login, String? password)
+    public Result Login(String? phoneNumber, String? password)
     {
-        if (login.IsNullOrWhiteSpace()) return Result.Fail("Укажите логин");
+        if (phoneNumber.IsNullOrWhiteSpace()) return Result.Fail("Укажите логин");
         if (password.IsNullOrWhiteSpace()) return Result.Fail("Укажите пароль");
 
-        User? existUser = _userRepository.GetUserByLogin(login!, password!.GetHash());
+        User? existUser = _userRepository.GetUserByPhoneNumber(phoneNumber!, password!.GetHash());
         if(existUser is null) return Result.Fail("Такого пользователя не существует");
 
         return Result.Success();
@@ -46,12 +46,10 @@ public class UserService : IUserService
         User? existUser = GetUser(id);
         Boolean isCreating = existUser is null;
 
-        if (blank.Login.IsNullOrWhiteSpace()) return Result.Fail("Укажите логин");
         if (blank.Password.IsNullOrWhiteSpace() && blank.PasswordBeChanged) return Result.Fail("Укажите пароль");
-        if (blank.Email.IsNullOrWhiteSpace()) return Result.Fail("Укажите почту");
+        if (blank.PhoneNumber.IsNullOrWhiteSpace()) return Result.Fail("Укажите номер телефона");
 
-        Boolean isLoginUnique = IsUniqueLogin(blank.Login!);
-        if (!isLoginUnique) return Result.Fail("Такой логин занят");
+        //Валидация номера
 
         Password password = new(
             isCreating
@@ -59,15 +57,9 @@ public class UserService : IUserService
             : blank.Password ?? existUser!.PasswordHash
         );
 
-        validatedUser = new UserBlank.Validated(id, blank.Login!, password, blank.Email!, blank.PasswordBeChanged!);
+        validatedUser = new UserBlank.Validated(id,  password, blank.PhoneNumber!, blank.PasswordBeChanged!);
 
         return Result.Success();
-    }
-
-    private Boolean IsUniqueLogin(String login)
-    {
-        User? user = _userRepository.GetUser(login);
-        return user is null;
     }
 
     public User? GetUser(Guid id)
@@ -75,18 +67,28 @@ public class UserService : IUserService
         return _userRepository.GetUser(id);
     }
 
-    public Result UpdatePassword(String? email, String? oldPassword, String? newPassword)
+    public Result UpdatePassword(String? phoneNumber, String? oldPassword, String? newPassword)
     {
-        if (email.IsNullOrWhiteSpace()) return Result.Fail("Укажите почту");
+        if (phoneNumber.IsNullOrWhiteSpace()) return Result.Fail("Укажите номер телефона");
         if (oldPassword.IsNullOrWhiteSpace()) return Result.Fail("Укажите старый пароль");
         if (newPassword.IsNullOrWhiteSpace()) return Result.Fail("Укажите новый пароль");
 
-        User? user = _userRepository.GetUserByEmail(email!, oldPassword!.GetHash());
+        User? user = _userRepository.GetUserByEmail(phoneNumber!, oldPassword!.GetHash());
         if (user is null) return Result.Fail("Пользователя с такими данными не существует");
 
         _userRepository.UpdateUserPassword(user.Id, newPassword!.GetHash());
 
         return Result.Success();
+    }
+
+    public User[] GetAllUsers()
+    {
+        return _userRepository.GetAllUsers();
+    }
+
+    public User? GetUser(String phoneNumber)
+    {
+        return _userRepository.GetUser(phoneNumber);
     }
 }
 

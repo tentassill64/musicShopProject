@@ -4,7 +4,9 @@ using musicShopProject.Tools.Types;
 namespace musicShopProject.Service;
 public interface IUserService
 {
+    Result Login(String? phoneNumber, String? password);
     Result Register(UserBlank blank);
-    Result Login(String? login, String? password);
     Result UpdatePassword(String? email, String? oldPassword, String? newPassword);
+    User[] GetAllUsers();
+    User? GetUser(String phoneNumber);
 }

@@ -6,22 +6,17 @@ namespace musicShopProject.Model.Users;
 public class User
 {
     public Guid Id { get; }
-    // убрать логин
-    public String Login { get; }
-    public String Email { get; }
-
-    //TODO добавить номер телефона 
-    // Регистрация - номер телефона + пароль.
-    // пользователь в профиле может добавить почту для рассылок 
-    // 
-
+    public String PhoneNumber { get; }
+    public String? Email { get; }
+    public DateOnly? BirthDate { get; }
     [JsonIgnore]
     public String PasswordHash { get; }
 
-    public User(Guid id, String login, String email)
+    public User(Guid id, String phoneNumber, String? email, DateOnly? birthDate)
     {
         Id = id;
-        Login = login;
+        PhoneNumber = phoneNumber;
         Email = email;
+        BirthDate = birthDate;
     }
 }
