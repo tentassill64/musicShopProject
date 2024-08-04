@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using musicShopProject.Model.Users;
 using musicShopProject.Service;
 using musicShopProject.Tools.Types;
 
@@ -18,5 +19,11 @@ public class ProfileController : ControllerBase
     public Result Update([FromBody] ChangeOldPasswordRequest request)
     {
         return _userService.UpdatePassword(request.PhoneNumber, request.OldPassword, request.NewPassword);
+    }
+
+    [HttpPost("")]
+    public Result SetEmail([FromBody] UserBlank request)
+    {
+
     }
 }

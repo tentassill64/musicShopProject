@@ -18,7 +18,6 @@ public class UserRepository : IUserRepository
 
     public void Save(UserBlank.Validated validatedBlank)
     {
-        //TOASK
         String query = @$"INSERT INTO users (id, phonenumber, passwordhash, email, 
                        createddatetimeutc, modifieddatetimeutc, isremoved, birthdate) 
                        VALUES (@p_id, @p_phonenumber, @p_passwordhash, null, @p_datetimeutc, 
