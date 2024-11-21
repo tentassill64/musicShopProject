@@ -1,0 +1,138 @@
+-- public.address определение
+
+-- Drop table
+
+-- DROP TABLE public.address;
+
+CREATE TABLE public.address (
+	id uuid NOT NULL,
+	city varchar NOT NULL,
+	street varchar NOT NULL,
+	home varchar NOT NULL,
+	apartment varchar NULL,
+	createddatetimeutc timestamp DEFAULT now() NOT NULL,
+	modifieddatetimeutc timestamp NULL,
+	isremoved bool DEFAULT false NOT NULL,
+	CONSTRAINT address_pk PRIMARY KEY (id)
+);
+
+
+-- public.categories определение
+
+-- Drop table
+
+-- DROP TABLE public.categories;
+
+CREATE TABLE public.categories (
+	id uuid NOT NULL,
+	"name" varchar NOT NULL,
+	isremoved bool DEFAULT false NOT NULL,
+	createddatetimeutc timestamp NOT NULL,
+	modifieddatetimeutc timestamp NULL,
+	createduserid uuid NOT NULL,
+	modifieduserid uuid NULL,
+	CONSTRAINT category_pk PRIMARY KEY (id),
+	CONSTRAINT category_unique UNIQUE (name)
+);
+
+
+-- public.orderitems определение
+
+-- Drop table
+
+-- DROP TABLE public.orderitems;
+
+CREATE TABLE public.orderitems (
+	id uuid NOT NULL,
+	orderid uuid NOT NULL,
+	productid uuid NOT NULL,
+	productprice numeric(12, 4) NOT NULL,
+	isremoved bool DEFAULT false NOT NULL,
+	createddatetimeutc timestamp DEFAULT now() NOT NULL,
+	modifieddatetimeutc timestamp NULL,
+	productcategoryid uuid NOT NULL
+);
+
+
+-- public.orders определение
+
+-- Drop table
+
+-- DROP TABLE public.orders;
+
+CREATE TABLE public.orders (
+	id uuid NOT NULL,
+	price numeric(12, 4) NOT NULL,
+	clientphonenumber varchar(20) NOT NULL,
+	clientid uuid NOT NULL,
+	addressid uuid NOT NULL,
+	createddatetimeutc timestamp DEFAULT now() NOT NULL,
+	modifieddatetimeutc timestamp NULL,
+	completeddatetimeutc timestamp NULL,
+	state int4 NOT NULL,
+	isremoved bool DEFAULT false NOT NULL,
+	ordernumber int4 NOT NULL,
+	CONSTRAINT orders_pk PRIMARY KEY (id)
+);
+
+
+-- public.products определение
+
+-- Drop table
+
+-- DROP TABLE public.products;
+
+CREATE TABLE public.products (
+	id uuid NOT NULL,
+	"name" varchar NOT NULL,
+	description varchar NOT NULL,
+	price numeric(12, 4) NOT NULL,
+	weight numeric NOT NULL,
+	manufacturer varchar NOT NULL,
+	quantity int4 NOT NULL,
+	images _varchar NULL,
+	status int4 NOT NULL,
+	createddatetimeutc timestamp NOT NULL,
+	modifieddatetimeutc timestamp NULL,
+	isremoved bool DEFAULT false NOT NULL,
+	ishidden bool DEFAULT true NOT NULL,
+	categoryid uuid NOT NULL,
+	createduserid uuid NOT NULL,
+	modifieduserid uuid NULL,
+	CONSTRAINT product_pk PRIMARY KEY (id)
+);
+
+
+-- public.users определение
+
+-- Drop table
+
+-- DROP TABLE public.users;
+
+CREATE TABLE public.users (
+	id uuid NOT NULL,
+	phonenumber varchar NOT NULL,
+	passwordhash varchar NOT NULL,
+	email varchar NULL,
+	createddatetimeutc timestamp NOT NULL,
+	modifieddatetimeutc timestamp NULL,
+	isremoved bool DEFAULT false NOT NULL,
+	birthdate date NULL,
+	CONSTRAINT user_pk PRIMARY KEY (id)
+);
+
+
+-- public.usertoken определение
+
+-- Drop table
+
+-- DROP TABLE public.usertoken;
+
+CREATE TABLE public.usertoken (
+	"token" varchar NOT NULL,
+	userid uuid NOT NULL,
+	expirationdatetimeutc timestamp NOT NULL,
+	createddatetimeutc timestamp DEFAULT now() NOT NULL,
+	modifieddatetimeutc timestamp NULL,
+	CONSTRAINT usertoken_pk PRIMARY KEY (token)
+);
