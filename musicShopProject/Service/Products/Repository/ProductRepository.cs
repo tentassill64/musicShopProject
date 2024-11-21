@@ -1,4 +1,6 @@
 ﻿using musicShopProject.Model.Products;
+using musicShopProject.Service.Products.Repository.Converters;
+using musicShopProject.Service.Products.Repository.Models;
 using musicShopProject.Tools.DataBase.Interfaces;
 using Npgsql;
 
@@ -56,5 +58,32 @@ public class ProductRepository : IProductRepository
         };
 
         _mainConnector.ExecuteNonQuery(query, parameters);
+    }
+
+    public Product[] GetProducts(Guid? categoryId = null)
+    {
+        String query = @"SELECT * FROM products
+                 WHERE (COALESCE(@p_categoryid::uuid, categoryid::uuid) = categoryid::uuid)";
+
+
+        NpgsqlParameter[] parameters =
+        {
+            new("p_categoryid", categoryId)
+        };
+
+        return _mainConnector.GetArray<ProductDB>(query, parameters).Select(product => product.ToProduct()).ToArray();
+    }
+
+    public Product? GetProduct(Guid productId)
+    {
+        String query = @"SELECT * FROM products
+                 WHERE id = @p_productid";
+
+        NpgsqlParameter[] parameters =
+        {
+            new("p_productid", productId)
+        };
+
+        return _mainConnector.Get<ProductDB>(query, parameters)?.ToProduct();
     }
 }

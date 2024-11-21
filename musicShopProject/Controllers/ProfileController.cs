@@ -21,9 +21,9 @@ public class ProfileController : ControllerBase
         return _userService.UpdatePassword(request.PhoneNumber, request.OldPassword, request.NewPassword);
     }
 
-    [HttpPost("")]
-    public Result SetEmail([FromBody] UserBlank request)
-    {
+    //[HttpPost("")]
+    //public Result SetEmail([FromBody] UserBlank request)
+    //{
 
-    }
+    //}
 }

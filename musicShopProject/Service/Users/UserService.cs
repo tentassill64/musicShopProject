@@ -90,5 +90,10 @@ public class UserService : IUserService
     {
         return _userRepository.GetUser(phoneNumber);
     }
+
+    public User? GetUserByToken(string email)
+    {
+        throw new NotImplementedException();
+    }
 }
 

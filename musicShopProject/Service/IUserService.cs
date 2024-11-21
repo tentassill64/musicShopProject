@@ -9,4 +9,5 @@ public interface IUserService
     Result UpdatePassword(String? email, String? oldPassword, String? newPassword);
     User[] GetAllUsers();
     User? GetUser(String phoneNumber);
+    User? GetUserByToken(String email);
 }

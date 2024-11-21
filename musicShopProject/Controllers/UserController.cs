@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using musicShopProject.Model.Users;
 using musicShopProject.Service;
 using musicShopProject.Tools.Types;
@@ -28,7 +29,8 @@ public class UserController : ControllerBase
         return _userService.Login(loginRequest.PhoneNumber, loginRequest.Password);
     }
 
-    [HttpGet("users/all")]
+    [AllowAnonymous]
+    [HttpGet("Users/Get/All")]
     public User[] GetAllUsers()
     {
         return _userService.GetAllUsers();

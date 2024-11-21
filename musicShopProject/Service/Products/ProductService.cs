@@ -22,6 +22,11 @@ public class ProductService : IProductService
         return SaveProduct(blank, requestedUserId);
     }
 
+    public Product[] GetProducts(Guid? categoryId = null)
+    {
+        return _productRepository.GetProducts(categoryId);
+    }
+
     private Result SaveProduct(ProductBlank blank, Guid requestedUserId)
     {
         Result validateResult = ValidateProductBlank(blank, out ProductBlank.Validated validatedProduct);
@@ -59,9 +64,9 @@ public class ProductService : IProductService
 
         if (blank.IsHidden is not { } isHidden) return Result.Fail("Укажите видимость");
 
-        //TOASK
         _imageService.Save(blank.Images, out String[] imagesPaths);
-        blank.Images = imagesPaths;
+
+        blank.Images = imagesPaths ?? blank.Images;
 
         validatedProduct = new ProductBlank.Validated(
             id, blank.Name!, blank.Description!, price,
@@ -75,5 +80,10 @@ public class ProductService : IProductService
     public Result UpdateProduct(ProductBlank blank, Guid requestedUserId)
     {
         return SaveProduct(blank, requestedUserId);
+    }
+
+    public Product? GetProduct(Guid productId)
+    {
+        return _productRepository.GetProduct(productId);
     }
 }

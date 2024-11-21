@@ -1,4 +1,7 @@
+using Microsoft.Extensions.FileProviders;
 using musicShopProject;
+using musicShopProject.Tools.Extensions;
+using musicShopProject.Tools.Infrastructure;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +18,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+);
+
+app.UseExceptionsHandler();
 app.UseStaticFiles(); 
 app.MapControllers();
+app.UseRouting();
+
 app.Run();
 

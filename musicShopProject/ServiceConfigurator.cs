@@ -1,6 +1,8 @@
 ﻿using musicShopProject.Service;
 using musicShopProject.Service.Categories;
 using musicShopProject.Service.Categories.Repository;
+using musicShopProject.Service.Orders;
+using musicShopProject.Service.Orders.Repository;
 using musicShopProject.Service.Products;
 using musicShopProject.Service.Products.Repository;
 using musicShopProject.Service.Users;
@@ -20,6 +22,7 @@ public static class ServiceConfigurator
         collection.AddSingleton<IProductService, ProductService>();
         collection.AddSingleton<IImageService, ImageService>();
         collection.AddSingleton<ICategoryService, CategoryService>();
+        collection.AddSingleton<IOrderService, OrderService>();
 
         #endregion Services
 
@@ -28,6 +31,7 @@ public static class ServiceConfigurator
         collection.AddSingleton<IUserRepository, UserRepository>();
         collection.AddSingleton<IProductRepository, ProductRepository>();
         collection.AddSingleton<ICategoryRepository, CategoryRepository>();
+        collection.AddSingleton<IOrderRepository, OrderRepository>();
 
         #endregion Repositories
 

@@ -19,7 +19,7 @@ public class CategoryController : ControllerBase
         return _categoryService.AddCategory(categoryBlank, requestedUserId);
     }
 
-    [HttpGet("category/get")]
+    [HttpGet("Category/Get/All")]
     public Category[] GetAllCategories()
     {
         return _categoryService.GetAllCategories();

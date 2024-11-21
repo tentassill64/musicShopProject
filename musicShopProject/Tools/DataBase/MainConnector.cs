@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using musicShopProject.Tools.DataBase.Interfaces;
+using musicShopProject.Tools.Types;
 using Npgsql;
 
 namespace musicShopProject.Tools.DataBase;
@@ -28,6 +29,24 @@ public class MainConnector : IMainConnector
 
         connection.Close();
         connection.Dispose();
+    }
+
+    public Page<T> GetPage<T>(String query, params NpgsqlParameter[] parameters)
+    {
+        DynamicParameters dynamicParameters = new();
+        foreach (NpgsqlParameter parameter in parameters)
+        {
+            dynamicParameters.Add(parameter.ParameterName, parameter.Value, parameter.DbType, parameter.Direction, parameter.Size);
+        }
+
+        using NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
+        connection.Open();
+
+        Int32 totalRows = connection.QueryFirstOrDefault<Int32>(query, dynamicParameters);
+        List<T> values = connection.Query<T>(query, dynamicParameters).ToList();
+
+        return new Page<T> { Values =  values, TotalRows = totalRows };
+
     }
 
     public T? Get<T>(String query, params NpgsqlParameter[] parameters)

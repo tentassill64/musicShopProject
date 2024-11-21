@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using musicShopProject.Model.Categories;
 using musicShopProject.Model.Products;
 using musicShopProject.Service;
 using musicShopProject.Tools.Types;
@@ -13,9 +15,21 @@ public class ProductController : ControllerBase
         _productService = productService;
     }
 
-    [HttpPost("product/add")]
-    public Result SaveProduct([FromBody] ProductBlank blank, Guid userId)
+    [HttpPost("Product/Save")]
+    public Result SaveProduct([FromBody] ProductBlank blank)
     {
-        return _productService.AddProduct(blank, userId);
+        return _productService.AddProduct(blank, Guid.NewGuid());
+    }
+
+    [HttpGet("Products/Get/All")]
+    public Product[] GetProducts([FromQuery] Guid? categoryId)
+    {
+        return _productService.GetProducts(categoryId);
+    }
+
+    [HttpGet("Product/Get")]
+    public Product? GetProduct([FromQuery] Guid productId)
+    {
+        return _productService?.GetProduct(productId);
     }
 }
