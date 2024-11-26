@@ -1,6 +1,7 @@
 ﻿using musicShopProject.Model.Addresses;
 using musicShopProject.Model.Orders;
 using musicShopProject.Model.Orders.enums;
+using musicShopProject.Model.Products;
 using musicShopProject.Model.Users;
 using musicShopProject.Service.Orders.Repository;
 using musicShopProject.Service.Orders.Repository.Model;
@@ -11,23 +12,44 @@ namespace musicShopProject.Service.Orders;
 public class OrderService : IOrderService
 {
     private readonly IOrderRepository _orderRepository;
-    public OrderService(IOrderRepository orderRepository)
+    private readonly IUserService _userService;
+    private readonly IProductService _productService;
+    public OrderService(IOrderRepository orderRepository, IUserService userService, IProductService productService)
     {
         _orderRepository = orderRepository;
+        _userService = userService;
+        _productService = productService;
     }
 
     public PagedResult<Order> GetOrderPage(Int32 page, Int32 pageSize)
     {
         PagedResult<OrderDB> orderDBs = _orderRepository.GetOrderPage(page, pageSize);
 
+        Guid[] addressesIds = orderDBs.Values.Select(order => order.AddressId).ToArray();
+
+        Address[] addresses = _orderRepository.GetAddresses(addressesIds);
+
+        Guid[] usersIds = orderDBs.Values.Select(order => order.ClientId).ToArray();
+
+        User[] users = _userService.GetUsers(usersIds);
+
         List<Order> orders = new List<Order>();
 
         foreach (OrderDB orderDB in orderDBs.Values)
         {
-            Address address = _orderRepository.GetOrderAddress(orderDB.AddressId);
-            User user = _orderRepository.GetOrderClient(orderDB.ClientId);
+            User? user = users.FirstOrDefault(x => x.Id == orderDB.ClientId);
+            Address? address = addresses.FirstOrDefault(x => x.Id == orderDB.AddressId);
+            OrderItemDB[] orderItemDBs = _orderRepository.GetOrderItems(orderDB.Id);
 
-            orders.Add(new(orderDB, address, user));
+            List<OrderItem> orderItems = new List<OrderItem>();
+
+            foreach(OrderItemDB orderItemDB in orderItemDBs)
+            {
+                Product? product = _productService.GetProduct(orderItemDB.ProductId);
+                orderItems.Add(new(orderItemDB, product));
+            }
+
+            orders.Add(new(orderDB, address, user, orderItems.ToArray()));
         }
 
         return new PagedResult<Order>(orders, orderDBs.TotalRows);

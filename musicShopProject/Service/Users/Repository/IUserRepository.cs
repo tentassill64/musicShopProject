@@ -14,7 +14,7 @@ public interface IUserRepository
 
     void UpdateUserPassword(Guid id, String newPassword);
 
-    User[]? GetUsers(Guid[] ids);
+    User[] GetUsers(Guid[] ids);
 
     User? GetUser(Guid id);
 

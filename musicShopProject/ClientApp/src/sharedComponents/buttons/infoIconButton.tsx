@@ -1,5 +1,5 @@
 import { IconButton, SxProps } from "@mui/material";
-import { Edit } from "@mui/icons-material";
+import { Info } from "@mui/icons-material";
 
 interface IProps {
     onClick: () => void
@@ -8,11 +8,11 @@ interface IProps {
     title?: string
 }
 
-export function EditIconButton(props: IProps) {
+export function InfoIconButton(props: IProps) {
     
     return (
         <IconButton onClick={props.onClick} sx={{ ...props.sx }} title={props.title}>
-            <Edit/>
+            <Info/>
         </IconButton>
     );
 }

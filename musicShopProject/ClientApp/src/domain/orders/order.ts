@@ -1,6 +1,7 @@
 import { Address, toAddress } from "../address/address";
 import { toUser, User } from "../user/user";
 import { OrderState } from "./enum/orderState";
+import { mapToOrderItems, OrderItem } from "./orderItem";
 
 export class Order {
     constructor(
@@ -9,6 +10,7 @@ export class Order {
         public clientPhoneNumber: string,
         public client: User,
         public address: Address,
+        public orderItems: OrderItem[],
         public completedDateTimeUtc: Date | null,
         public createdDateTimeUtc: Date, 
         public state: OrderState,
@@ -19,10 +21,13 @@ export class Order {
 export function mapToOrder(data: any): Order {
     const client = toUser(data.client);
     const address = toAddress(data.address);
-    const completedDateTime = new Date(data.completedDateTimeUtc)
+    let completedDateTime: Date | null;
+    if(data.completedDateTimeUtc) completedDateTime = new Date(data.completedDateTimeUtc);
+    else completedDateTime = null;
     const createdDateTime = new Date(data.createdDateTimeUtc);
+    const orderItems = mapToOrderItems(data.orderItems);
 
-    return new Order(data.id, data.price, data.clientPhoneNumber, client, address, completedDateTime, createdDateTime, data.state, data.orderNumber);
+    return new Order(data.id, data.price, data.clientPhoneNumber, client, address, orderItems, completedDateTime, createdDateTime, data.state, data.orderNumber);
 }
 
 export function mapToOrders(data: any[]): Order[] {

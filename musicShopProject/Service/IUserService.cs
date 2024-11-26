@@ -8,6 +8,7 @@ public interface IUserService
     Result Register(UserBlank blank);
     Result UpdatePassword(String? email, String? oldPassword, String? newPassword);
     User[] GetAllUsers();
+    User[] GetUsers(Guid[] usersIds);
     User? GetUser(String phoneNumber);
     User? GetUserByToken(String email);
 }

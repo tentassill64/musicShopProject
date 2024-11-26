@@ -6,6 +6,7 @@ public class Product
     public String Name { get; }
     public String Description { get; }
     public ProductStatus Status { get; }
+    public String Manufacturer { get; }
     public Decimal Price { get; }
     public Decimal Weight { get; }
     public Guid CategoryId { get; }
@@ -15,13 +16,14 @@ public class Product
 
     public Product(
         Guid id, String name, String description, 
-        ProductStatus status, Decimal price, Decimal weight,
+        ProductStatus status, String manufacturer, Decimal price, Decimal weight,
         Guid categoryId, Boolean isHidden, Int32 quantity, String[] images)
     {
         Id = id;
         Name = name;
         Description = description;
         Status = status;
+        Manufacturer = manufacturer;
         Price = price;
         Weight = weight;
         CategoryId = categoryId;

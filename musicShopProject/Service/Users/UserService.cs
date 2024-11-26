@@ -86,6 +86,11 @@ public class UserService : IUserService
         return _userRepository.GetAllUsers();
     }
 
+    public User[] GetUsers(Guid[] usersIds)
+    {
+        return _userRepository.GetUsers(usersIds);
+    }
+
     public User? GetUser(String phoneNumber)
     {
         return _userRepository.GetUser(phoneNumber);

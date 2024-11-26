@@ -37,6 +37,39 @@ public class OrderRepository : IOrderRepository
         return address;
     }
 
+    public Address[] GetAddresses(Guid[] addressesIds)
+    {
+        String query = @"select * from address 
+                       where id = ANY(@p_addressesids)";
+
+        NpgsqlParameter[] parameters =
+        {
+            new("p_addressesids", addressesIds)
+        };
+
+        Address[] addresses = _mainConnector
+            .GetArray<AddressDB>(query, parameters)
+            .Select(ad => ad.ToAddress())
+            .ToArray();
+
+        return addresses;
+    }
+
+    public OrderItemDB[] GetOrderItems(Guid orderId)
+    {
+        String query = @"select * from orderitems 
+                         where orderid = @p_orderid";
+
+        NpgsqlParameter[] parameters =
+        {
+            new("p_orderid", orderId)
+        };
+
+        OrderItemDB[] orderItemDBs = _mainConnector.GetArray<OrderItemDB>(query, parameters);
+
+        return orderItemDBs;
+    }
+
     public User GetOrderClient(Guid clientId)
     {
         String query = @"select * from users
@@ -81,9 +114,9 @@ public class OrderRepository : IOrderRepository
 
         NpgsqlParameter[] parameters =
         {
-        new("p_startindex", startIndex),
-        new("p_pagesize", pageSize)
-    };
+            new("p_startindex", startIndex),
+            new("p_pagesize", pageSize)
+        };
 
         Int32 totalRows = _mainConnector.Get<Int32>(countQuery);
 

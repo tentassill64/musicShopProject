@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { Box, Divider, Typography, TextField, Select, MenuItem, Checkbox, FormControlLabel, Button, IconButton } from "@mui/material";
+import { Box, Divider, Typography, TextField, Select, MenuItem, Checkbox, FormControlLabel, Button, IconButton, List, ListItem } from "@mui/material";
 import { useFetcher, useNavigate, useParams } from "react-router-dom";
 import { ProductBlank } from "../../domain/products/productBlank";
 import { Category } from "../../domain/products/productsCategories/category";
@@ -10,6 +10,7 @@ import { ProductStatus } from "../../domain/products/enum/ProductStatus";
 import { useNotifications } from "@toolpad/core";
 import AddIcon from '@mui/icons-material/Add';
 import { SiteLinks } from "../../tools/links";
+import { CancelIconButton } from "../../sharedComponents/buttons/cancelIconButton";
 
 export function EditProductPage() {
     const { productid } = useParams();
@@ -109,6 +110,13 @@ export function EditProductPage() {
         }))
     }
 
+    function deleteImage(url: string) {
+        setProduct(state => ({
+            ...state,
+            images: state.images.filter(imgUrl => imgUrl !== url)
+        }));
+    }
+
     function changeIsHidden(e: ChangeEvent<HTMLInputElement>) {
         setProduct(state => ({...state,
             isHidden: e.target.checked
@@ -116,9 +124,7 @@ export function EditProductPage() {
     }
 
     async function saveProduct() {
-        console.log(product);
         const response = await ProductProvider.saveProduct(product);
-        console.log(response);
 
         if(response.isSuccess) {
             notification.show("Успешно",
@@ -247,11 +253,14 @@ export function EditProductPage() {
                 {product.images && product.images.length > 0 && (
                     <Box>
                         <Typography variant="subtitle1">Ссылки на фотографии:</Typography>
-                        <ul>
+                        <List>
                             {product.images.map((url, index) => (
-                                <li key={index}>{url}</li>
+                                <Box display={'flex'} justifyContent={'space-between'}>
+                                    <ListItem key={index}>{url}</ListItem>
+                                    <CancelIconButton onClick={() => deleteImage(url)}/>
+                                </Box>
                             ))}
-                        </ul>
+                        </List>
                     </Box>
                 )}
                 <Button variant="contained" 

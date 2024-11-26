@@ -7,17 +7,18 @@ namespace musicShopProject.Model.Orders;
 
 public class Order
 {
-    public Guid Id { get; set; }
-    public Decimal Price { get; set; }
-    public String ClientPhoneNumber { get; set; }
-    public User Client { get; set; }
-    public Address Address { get; set; }
-    public DateTime? CompletedDateTimeUtc { get; set; }
-    public DateTime CreatedDateTimeUtc { get; set; }
-    public OrderState State { get; set; }
-    public Int32 OrderNumber { get; set; }
+    public Guid Id { get; }
+    public Decimal Price { get; }
+    public String ClientPhoneNumber { get; }
+    public User Client { get; }
+    public Address Address { get; }
+    public DateTime? CompletedDateTimeUtc { get; }
+    public DateTime CreatedDateTimeUtc { get;  }
+    public OrderState State { get; }
+    public Int32 OrderNumber { get; }
+    public OrderItem[] OrderItems { get; }
 
-    public Order(OrderDB db, Address address, User user)
+    public Order(OrderDB db, Address address, User user, OrderItem[] items)
     {
         Id = db.Id;
         Price = db.Price;
@@ -28,5 +29,6 @@ public class Order
         CreatedDateTimeUtc = db.CreatedDateTimeUtc;
         State = db.State;
         OrderNumber = db.OrderNumber;
+        OrderItems = items;
     }
 }

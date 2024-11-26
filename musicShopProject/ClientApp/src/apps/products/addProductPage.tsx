@@ -102,9 +102,7 @@ export function AddProductPage() {
     }
 
     async function saveProduct() {
-        console.log(product);
         const response = await ProductProvider.saveProduct(product);
-        console.log(response);
 
         if(response.isSuccess) {
             notification.show("Успешно",

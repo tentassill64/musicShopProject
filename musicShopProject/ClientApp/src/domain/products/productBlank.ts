@@ -40,7 +40,7 @@ export namespace ProductBlank {
             manufacturer: product.manufacturer,
             categoryId: product.categoryId,
             isHidden: product.isHidden,
-            images: [],
+            images: product.images,
             price: product.price,
             quantity: product.quantity,
             status: product.status,

@@ -1,4 +1,3 @@
-import { PrettyDOMOptions } from "@testing-library/react";
 import { ProductStatus } from "./enum/ProductStatus";
 
 export class Product {

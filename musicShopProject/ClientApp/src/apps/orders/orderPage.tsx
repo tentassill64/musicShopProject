@@ -9,6 +9,9 @@ import { CancelIconButton } from "../../sharedComponents/buttons/cancelIconButto
 import { AcceptIconButton } from "../../sharedComponents/buttons/acceptIconButton";
 import { DeliveryIconButton } from "../../sharedComponents/buttons/deliveryIconButton";
 import { useNotifications } from "@toolpad/core";
+import useAsyncModal from "../../sharedComponents/modal/asyncModal/asyncModal";
+import { OrderDetailsModal, OrderDetailsModalProps } from "./modal/orderDetailsModal";
+import { InfoIconButton } from "../../sharedComponents/buttons/infoIconButton";
 
 export function OrderPage() {
     const [orders, setOrders] = useState<Order[]>([]);
@@ -17,6 +20,8 @@ export function OrderPage() {
     const [totalRows, setTotalRows] = useState<number>(0);
 
     const notification = useNotifications();
+
+    const showOrderDetailModal = useAsyncModal<OrderDetailsModalProps>(OrderDetailsModal);
 
     useEffect(() => {
         loadOrders(page, pageSize);
@@ -27,7 +32,7 @@ export function OrderPage() {
 
         const orders = pagedResult.values;
         const totalRows = pagedResult.totalRows;
-
+        
         setOrders(orders);
         setTotalRows(totalRows);
     }
@@ -67,19 +72,25 @@ export function OrderPage() {
         loadOrders(page, pageSize);
     }
 
-    function renderOrderButtons(state: OrderState, orderId: string) {
+    function renderOrderButtons(state: OrderState, order: Order) {
         switch(state) {
             case OrderState.Ordered: return (
                 <Box>
-                    <CancelIconButton title="Отменить заказ" onClick={() => cancelOrder(orderId)}/>
-                    <AcceptIconButton title="Подтвердить заказ" onClick={() => acceptOrder(orderId)}/>
+                    <InfoIconButton title="Информация" onClick={async () => await showOrderDetailModal({order})}/>
+                    <CancelIconButton title="Отменить заказ" onClick={() => cancelOrder(order.id)}/>
+                    <AcceptIconButton title="Подтвердить заказ" onClick={() => acceptOrder(order.id)}/>
                 </Box>
             );
-            case OrderState.Canceled: return (<Box></Box>)
+            case OrderState.Canceled: return (<Box>
+                <InfoIconButton title="Информация" onClick={async () => await showOrderDetailModal({order})}/>
+                </Box>)
             case OrderState.OnDelivery: return (<Box>
-                <DeliveryIconButton title="Доставить заказ" onClick={() => deliveryOrder(orderId)}/>
+                <InfoIconButton title="Информация" onClick={async () => await showOrderDetailModal({order})}/>
+                <DeliveryIconButton title="Доставить заказ" onClick={() => deliveryOrder(order.id)}/>
             </Box>)
-            case OrderState.Completed: return (<Box></Box>)
+            case OrderState.Completed: return (<Box>
+                <InfoIconButton title="Информация" onClick={async () => await showOrderDetailModal({order})}/>
+            </Box>)
         }
     }
 
@@ -154,7 +165,7 @@ export function OrderPage() {
                                     <Typography variant="h5" component="div">
                                         № Заказа: {order.orderNumber}
                                     </Typography>
-                                    {renderOrderButtons(order.state, order.id)}
+                                    {renderOrderButtons(order.state, order)}
                                 </Box>
                                 <Typography variant="body2">
                                     Стоимость заказа: {order.price} ₽
