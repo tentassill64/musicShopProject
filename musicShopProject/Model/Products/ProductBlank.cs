@@ -13,7 +13,6 @@ public partial class ProductBlank
     public String[]? Images {  get; set; }
     public Int32? Status { get; set; }
     public Boolean? IsHidden { get; set; }
-    /*public Guid? UserId { get; set; }*/ //TOASK
 }
 public partial class ProductBlank
 {

@@ -58,7 +58,7 @@ export function ClientAppProvider(props: any) {
                 },
                 {
                     segment: 'products',
-                    title: 'Продукты/товары',
+                    title: 'Склад',
                     icon: <InventoryIcon/>
                 },
                 {

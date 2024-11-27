@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="musicShopProject.Controllers.UserController">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAEAAUAAEAAAA=</HashCode>
+      <FileName>Controllers\UserController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="musicShopProject.Controllers.ProfileController">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Controllers\ProfileController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="musicShopProject.Controllers.ProductController">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQgAAAAAAAAAAAAAAAAAAAAAAAAQAAACAAAAAA=</HashCode>
+      <FileName>Controllers\ProductController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="musicShopProject.Controllers.OrderController">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAACAQAAAAAAA=</HashCode>
+      <FileName>Controllers\OrderController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="musicShopProject.Controllers.CategoryController">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\CategoryController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="musicShopProject.Service.Categories.CategoryService">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAQAAAAAAAAAAAAEAAAAAAADAAAAAAAAAAA=</HashCode>
+      <FileName>Service\Categories\CategoryService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="musicShopProject.Service.Orders.OrderService">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAABAAAAAAAAAAAAAAAAAAAAAAUABAAAAA=</HashCode>
+      <FileName>Service\Orders\OrderService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="musicShopProject.Service.Products.ProductService">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgIAAEAAAAAAAAQACAAAAAAAAAQAAACAAAIAA=</HashCode>
+      <FileName>Service\Products\ProductService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="musicShopProject.Tools.DataBase.DataBaseFuncs">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tools\DataBase\DataBaseFuncs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="musicShopProject.Tools.DataBase.MainConnector">
+    <Position X="2.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAMAAAAAQAAAMAAAAAAAAAAA=</HashCode>
+      <FileName>Tools\DataBase\MainConnector.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="musicShopProject.Tools.Extensions.ApplicationExtensions">
+    <Position X="4" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tools\Extensions\ApplicationExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="musicShopProject.Tools.Extensions.HttpExtensions">
+    <Position X="5.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAQAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tools\Extensions\HttpExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="musicShopProject.Tools.Extensions.StringExtensions">
+    <Position X="7.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Tools\Extensions\StringExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="musicShopProject.Tools.Types.Page&lt;T&gt;">
+    <Position X="9.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Tools\Types\Page.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="musicShopProject.Tools.Types.PagedResult">
+    <Position X="11" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tools\Types\PagedResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="musicShopProject.Tools.Types.PagedResult&lt;T&gt;">
+    <Position X="12.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Tools\Types\PagedResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="musicShopProject.Tools.Types.Result">
+    <Position X="11" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAgAAAAAAQAAAAAAAAgAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tools\Types\Result.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="musicShopProject.ServiceConfigurator">
+    <Position X="12.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ServiceConfigurator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
