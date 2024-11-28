@@ -1,58 +1,77 @@
-INSERT INTO public.users
-(id, phonenumber, passwordhash, email, createddatetimeutc, modifieddatetimeutc, isremoved, birthdate)
-VALUES('3fa85f64-5757-4562-b3fc-2c963f66afa6'::uuid, '+79772892213', 'D89BE79BCF40D8EC27E539F02D51B8AA', NULL, '2024-07-31 21:52:54.820', NULL, false, NULL);
+INSERT INTO public.address
+(id, city, street, home, apartment, createddatetimeutc, modifieddatetimeutc, isremoved)
+VALUES('3fa85f64-5757-4562-b3fc-2c963f26afa6'::uuid, 'Луховицы', 'Карла-Маркса', '5', NULL, '2024-11-20 16:04:45.148', NULL, false);
 
+INSERT INTO public.products
+(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
+VALUES('3ec0e6b5-a8fb-45c3-95aa-f08e061f96df'::uuid, '1212122112', '12121212', 1.0000, 1, '3333', 17, '{}', 2, '2024-11-26 23:28:17.594', NULL, false, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, '503b1363-e488-4d5c-94b4-23efbf6aab39'::uuid, NULL);
+INSERT INTO public.products
+(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
+VALUES('38c87956-7353-4c0f-9078-02d12bb83924'::uuid, 'Гитара', 'Ну типо гитара', 32.0000, 1, 'Дерево', 9, '{97ab7991-37c8-483d-9b26-9f2a7347b319.png}', 1, '2024-11-27 17:17:15.730', NULL, false, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, 'd86da21d-3114-4e1d-b97a-4e39ad6e8e88'::uuid, NULL);
+INSERT INTO public.products
+(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
+VALUES('3fa45f64-5717-4562-b3fc-2c263f66afa6'::uuid, '123', '1234', 1022.0000, 1022, '1245', 1022, '{97ab7991-37c8-483d-9b26-9f2a7347b319.png}', 3, '2024-11-21 02:00:14.804', '2024-11-21 09:33:14.718', true, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, '3fa85f64-8757-4562-b3fc-2c963f66afa6'::uuid, '9f9ab1b7-a1a6-4809-b403-bf8fbdbdf303'::uuid);
+INSERT INTO public.products
+(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
+VALUES('3fa85f54-5717-4562-b3fc-2c963f66afa6'::uuid, 'string', 'string', 1.0000, 1, '4444', 0, '{97ab7991-37c8-483d-9b26-9f2a7347b319.png}', 1, '2024-07-30 20:33:06.704', '2024-11-21 09:51:28.414', true, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, '3fa85f14-5717-4512-b3fc-2c913f66afa6'::uuid, 'e978dcf0-5a5a-4915-b629-75a2eb5bc5ce'::uuid);
+INSERT INTO public.products
+(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
+VALUES('faf745b5-12b3-4bff-8067-e91b1e6ff402'::uuid, '121212', '123', 555.0000, 555, '421', 111, '{97ab7991-37c8-483d-9b26-9f2a7347b319.png}', 1, '2024-11-21 10:39:35.955', '2024-11-26 16:48:31.491', true, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, 'b1dbda83-f162-4f9d-8de1-81823cf97c20'::uuid, 'a9bd3b5a-3a5f-4652-8e4c-ad14e55c93ef'::uuid);
+INSERT INTO public.products
+(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
+VALUES('a897e368-6a15-487c-b2e5-d5d39573e0b5'::uuid, 'string12', '12', 13.0000, 121524, '12', 1124, '{97ab7991-37c8-483d-9b26-9f2a7347b319.png}', 3, '2024-11-26 23:27:31.950', '2024-11-26 23:27:59.649', false, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, '9d210dc5-fd26-4731-a62d-7959bb5ba2ff'::uuid, '298c9d05-9392-4f39-bbc8-2cb9ab29b8a6'::uuid);
+INSERT INTO public.products
+(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
+VALUES('3fa85f44-5717-4562-b3fc-2c963f66afa6'::uuid, 'string', 'string', 1.0000, 1, '421', 0, '{97ab7991-37c8-483d-9b26-9f2a7347b319.png}', 1, '2024-07-30 20:30:19.554', '2024-11-21 09:53:36.337', true, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, '00000000-0000-0000-0000-000000000000'::uuid, '3f317594-4e58-498e-b072-0fef4747050e'::uuid);
+INSERT INTO public.products
+(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
+VALUES('1fa85f64-5717-4562-b3fc-2c963f56afa1'::uuid, 'string', 'string', 1.0000, 1, '215', 1, '{97ab7991-37c8-483d-9b26-9f2a7347b319.png}', 1, '2024-07-30 20:25:21.604', '2024-11-21 09:55:41.408', true, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, '4fa85f64-5717-4552-b3fc-3c963f66afa6'::uuid, '6dcc025e-8f0b-48f4-9b37-f747a2179428'::uuid);
+INSERT INTO public.products
+(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
+VALUES('3fa85f64-5717-4462-b3fc-2c963f66afa6'::uuid, 'string', 'string', 10.0000, 10, 'string', 10, '{97ab7991-37c8-483d-9b26-9f2a7347b319.png}', 1, '2024-11-20 23:57:42.899', NULL, true, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, '3fa85f64-5717-4362-b3fc-2c963f66afa3'::uuid, NULL);
+INSERT INTO public.products
+(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
+VALUES('6fa85f64-5717-4562-b3fc-2c963f66afa6'::uuid, 'string', 'string', 1.0000, 1, 'string', 1, '{97ab7991-37c8-483d-9b26-9f2a7347b319.png}', 1, '2024-07-30 20:24:19.520', NULL, true, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, '00000000-0000-0000-0000-000000000000'::uuid, NULL);
+INSERT INTO public.products
+(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
+VALUES('ecbf01eb-bff6-469c-9f17-3561870da422'::uuid, 'Тентассилл64', 'sfsafa', 14.0000, 17, '214', 16, '{97ab7991-37c8-483d-9b26-9f2a7347b319.png}', 1, '2024-11-25 15:35:03.398', NULL, false, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, 'f8d3ff25-6544-4a47-b4d3-705573ac0022'::uuid, NULL);
+INSERT INTO public.products
+(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
+VALUES('2fa85f64-5717-4562-b3fc-2c963f66afa6'::uuid, 'string', 'string', 10.0000, 10, '3333', 10, '{}', 3, '2024-07-30 20:38:15.718', '2024-11-21 09:58:42.528', true, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, '3fa85f14-5717-4512-b3fc-2c913f66afa6'::uuid, '58eeebc2-5019-429d-9a50-ad67e4089ef6'::uuid);
+INSERT INTO public.products
+(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
+VALUES('3fa85f64-5217-4562-b3fc-2c964f66afa6'::uuid, 'string4444', 'string', 10.0000, 20, '5252', 30, '{}', 1, '2024-11-21 00:02:50.276', '2024-11-21 09:58:58.942', true, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, '3fa85f64-5717-4564-b3fc-2c963f66afa6'::uuid, '6e7ac8dc-46d6-4149-b6e8-84720ec3ad76'::uuid);
+INSERT INTO public.products
+(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
+VALUES('245f0f3b-983f-418b-98f9-a6187c3e2675'::uuid, 'Стратегия', 'fafasfasf', 15.0000, 1488, 'rr6546', 3, '{}', 1, '2024-11-24 21:22:50.735', '2024-11-24 21:23:29.736', false, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, '2e5a31af-6f50-4b7c-82f8-66fb88f83033'::uuid, 'fe92dfb5-0474-42c8-96d9-9c6ac1f774b8'::uuid);
+
+INSERT INTO public.orderitems
+(id, orderid, productid, productprice, isremoved, createddatetimeutc, modifieddatetimeutc, productcategoryid)
+VALUES('ecbf01eb-bff6-469c-9f17-3561870da442'::uuid, '3fa85f34-5727-4532-b1fc-2c963f66afa6'::uuid, 'faf745b5-12b3-4bff-8067-e91b1e6ff402'::uuid, 111.0000, false, '2024-11-26 14:21:37.593', NULL, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid);
 
 INSERT INTO public.orders
 (id, price, clientphonenumber, clientid, addressid, createddatetimeutc, modifieddatetimeutc, completeddatetimeutc, state, isremoved, ordernumber)
 VALUES('3fa85f34-5727-4532-b1fc-4c963f66afa6'::uuid, 666.0000, '123', '3fa85f64-5757-4562-b3fc-2c963f66afa6'::uuid, '3fa85f64-5757-4562-b3fc-2c963f26afa6'::uuid, '2024-11-20 16:05:05.032', NULL, NULL, 1, false, 3);
 INSERT INTO public.orders
 (id, price, clientphonenumber, clientid, addressid, createddatetimeutc, modifieddatetimeutc, completeddatetimeutc, state, isremoved, ordernumber)
-VALUES('3fa85f34-5727-4532-b1fc-5c963f66afa6'::uuid, 626.0000, '123', '3fa85f64-5757-4562-b3fc-2c963f66afa6'::uuid, '3fa85f64-5757-4562-b3fc-2c963f26afa6'::uuid, '2024-11-20 16:05:05.032', NULL, NULL, 1, false, 4);
-INSERT INTO public.orders
-(id, price, clientphonenumber, clientid, addressid, createddatetimeutc, modifieddatetimeutc, completeddatetimeutc, state, isremoved, ordernumber)
 VALUES('3fa85f34-5727-4532-b1fc-3c963f66afa6'::uuid, 6662.0000, '123', '3fa85f64-5757-4562-b3fc-2c963f66afa6'::uuid, '3fa85f64-5757-4562-b3fc-2c963f26afa6'::uuid, '2024-11-20 16:05:05.032', NULL, NULL, 4, false, 2);
 INSERT INTO public.orders
 (id, price, clientphonenumber, clientid, addressid, createddatetimeutc, modifieddatetimeutc, completeddatetimeutc, state, isremoved, ordernumber)
 VALUES('3fa85f34-5727-4532-b1fc-2c963f66afa6'::uuid, 666.0000, '123', '3fa85f64-5757-4562-b3fc-2c963f66afa6'::uuid, '3fa85f64-5757-4562-b3fc-2c963f26afa6'::uuid, '2024-11-20 16:05:05.032', NULL, NULL, 2, false, 1);
-
-
+INSERT INTO public.orders
+(id, price, clientphonenumber, clientid, addressid, createddatetimeutc, modifieddatetimeutc, completeddatetimeutc, state, isremoved, ordernumber)
+VALUES('3fa85f34-5727-4532-b1fc-5c963f66afa6'::uuid, 626.0000, '123', '3fa85f64-5757-4562-b3fc-2c963f66afa6'::uuid, '3fa85f64-5757-4562-b3fc-2c963f26afa6'::uuid, '2024-11-20 16:05:05.032', NULL, NULL, 3, false, 4);
 
 INSERT INTO public.categories
 (id, "name", isremoved, createddatetimeutc, modifieddatetimeutc, createduserid, modifieduserid)
-VALUES('3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, 'sigma', false, '2024-07-30 22:58:18.274', NULL, '4fa85f34-5717-4532-b1fc-2c963f66afa1'::uuid, NULL);
+VALUES('4fa85f34-5717-4532-b2fc-2c963f66afa1'::uuid, 'Альбом', false, '2024-07-30 22:58:18.274', NULL, '4fa85f34-5717-4532-b1fc-2c963f66afa1'::uuid, NULL);
+INSERT INTO public.categories
+(id, "name", isremoved, createddatetimeutc, modifieddatetimeutc, createduserid, modifieduserid)
+VALUES('3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, 'Муз. Инструмент', false, '2024-07-30 22:58:18.274', NULL, '4fa85f34-5717-4532-b1fc-2c963f66afa1'::uuid, NULL);
+INSERT INTO public.categories
+(id, "name", isremoved, createddatetimeutc, modifieddatetimeutc, createduserid, modifieduserid)
+VALUES('7fa85f34-5717-4532-b1fc-2c963f66afa1'::uuid, 'Аксессуар', false, '2024-07-30 22:58:18.274', NULL, '4fa85f34-5717-4532-b1fc-2c963f66afa1'::uuid, NULL);
 
-
-INSERT INTO public.address
-(id, city, street, home, apartment, createddatetimeutc, modifieddatetimeutc, isremoved)
-VALUES('3fa85f64-5757-4562-b3fc-2c963f26afa6'::uuid, 'Луховицы', 'Карла-Маркса', '5', NULL, '2024-11-20 16:04:45.148', NULL, false);
-
-
-
-INSERT INTO public.products
-(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
-VALUES('3fa45f64-5717-4562-b3fc-2c263f66afa6'::uuid, '123', '1234', 1022.0000, 1022, '1245', 1022, '{eec3628d-6455-437b-8dc4-50a3e90e7064.png}', 3, '2024-11-21 02:00:14.804', '2024-11-21 09:33:14.718', false, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, '3fa85f64-8757-4562-b3fc-2c963f66afa6'::uuid, '9f9ab1b7-a1a6-4809-b403-bf8fbdbdf303'::uuid);
-INSERT INTO public.products
-(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
-VALUES('3fa85f54-5717-4562-b3fc-2c963f66afa6'::uuid, 'string', 'string', 1.0000, 1, '4444', 0, '{eec3628d-6455-437b-8dc4-50a3e90e7064.png}', 1, '2024-07-30 20:33:06.704', '2024-11-21 09:51:28.414', false, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, '3fa85f14-5717-4512-b3fc-2c913f66afa6'::uuid, 'e978dcf0-5a5a-4915-b629-75a2eb5bc5ce'::uuid);
-INSERT INTO public.products
-(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
-VALUES('3fa85f44-5717-4562-b3fc-2c963f66afa6'::uuid, 'string', 'string', 1.0000, 1, '421', 0, '{eec3628d-6455-437b-8dc4-50a3e90e7064.png,https://sun1-92.userapi.com/impg/qwi86ASn1nff_y5x3mcm_T-tR8rzUDtl5TlCyg/hOsZ9QTcRLs.jpg?size=537x604&quality=96&sign=114f950db29bbe385efcf03d61140964&type=album}', 1, '2024-07-30 20:30:19.554', '2024-11-21 09:53:36.337', false, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, '00000000-0000-0000-0000-000000000000'::uuid, '3f317594-4e58-498e-b072-0fef4747050e'::uuid);
-INSERT INTO public.products
-(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
-VALUES('1fa85f64-5717-4562-b3fc-2c963f56afa1'::uuid, 'string', 'string', 1.0000, 1, '215', 1, '{830748e8-9333-476e-830c-cfb75f7db556.png}', 1, '2024-07-30 20:25:21.604', '2024-11-21 09:55:41.408', false, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, '4fa85f64-5717-4552-b3fc-3c963f66afa6'::uuid, '6dcc025e-8f0b-48f4-9b37-f747a2179428'::uuid);
-INSERT INTO public.products
-(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
-VALUES('2fa85f64-5717-4562-b3fc-2c963f66afa6'::uuid, 'string', 'string', 10.0000, 10, '3333', 10, '{}', 3, '2024-07-30 20:38:15.718', '2024-11-21 09:58:42.528', false, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, '3fa85f14-5717-4512-b3fc-2c913f66afa6'::uuid, '58eeebc2-5019-429d-9a50-ad67e4089ef6'::uuid);
-INSERT INTO public.products
-(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
-VALUES('3fa85f64-5217-4562-b3fc-2c964f66afa6'::uuid, 'string4444', 'string', 10.0000, 20, '5252', 30, '{}', 1, '2024-11-21 00:02:50.276', '2024-11-21 09:58:58.942', false, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, '3fa85f64-5717-4564-b3fc-2c963f66afa6'::uuid, '6e7ac8dc-46d6-4149-b6e8-84720ec3ad76'::uuid);
-INSERT INTO public.products
-(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
-VALUES('faf745b5-12b3-4bff-8067-e91b1e6ff402'::uuid, 'Kosinis', '123', 555.0000, 555, '421', 111, '{b1af8a7e-03cd-4dea-8166-74083b434ef1.png}', 1, '2024-11-21 10:39:35.955', NULL, false, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, 'b1dbda83-f162-4f9d-8de1-81823cf97c20'::uuid, NULL);
-INSERT INTO public.products
-(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
-VALUES('3fa85f64-5717-4462-b3fc-2c963f66afa6'::uuid, 'string', 'string', 10.0000, 10, 'string', 10, '{eec3628d-6455-437b-8dc4-50a3e90e7064.png}', 1, '2024-11-20 23:57:42.899', NULL, false, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, '3fa85f64-5717-4362-b3fc-2c963f66afa3'::uuid, NULL);
-INSERT INTO public.products
-(id, "name", description, price, weight, manufacturer, quantity, images, status, createddatetimeutc, modifieddatetimeutc, isremoved, ishidden, categoryid, createduserid, modifieduserid)
-VALUES('6fa85f64-5717-4562-b3fc-2c963f66afa6'::uuid, 'string', 'string', 1.0000, 1, 'string', 1, '{eec3628d-6455-437b-8dc4-50a3e90e7064.png}', 1, '2024-07-30 20:24:19.520', NULL, false, false, '3fa85f34-5717-4532-b1fc-2c963f66afa6'::uuid, '00000000-0000-0000-0000-000000000000'::uuid, NULL);
+INSERT INTO public.users
+(id, phonenumber, passwordhash, email, createddatetimeutc, modifieddatetimeutc, isremoved, birthdate)
+VALUES('3fa85f64-5757-4562-b3fc-2c963f66afa6'::uuid, '+79772892213', 'D89BE79BCF40D8EC27E539F02D51B8AA', NULL, '2024-07-31 21:52:54.820', NULL, false, NULL);

@@ -16,7 +16,6 @@ CREATE TABLE public.address (
 	CONSTRAINT address_pk PRIMARY KEY (id)
 );
 
-
 -- public.categories определение
 
 -- Drop table
@@ -35,7 +34,6 @@ CREATE TABLE public.categories (
 	CONSTRAINT category_unique UNIQUE (name)
 );
 
-
 -- public.orderitems определение
 
 -- Drop table
@@ -52,7 +50,6 @@ CREATE TABLE public.orderitems (
 	modifieddatetimeutc timestamp NULL,
 	productcategoryid uuid NOT NULL
 );
-
 
 -- public.orders определение
 
@@ -74,7 +71,6 @@ CREATE TABLE public.orders (
 	ordernumber int4 NOT NULL,
 	CONSTRAINT orders_pk PRIMARY KEY (id)
 );
-
 
 -- public.products определение
 
@@ -102,7 +98,6 @@ CREATE TABLE public.products (
 	CONSTRAINT product_pk PRIMARY KEY (id)
 );
 
-
 -- public.users определение
 
 -- Drop table
@@ -121,18 +116,3 @@ CREATE TABLE public.users (
 	CONSTRAINT user_pk PRIMARY KEY (id)
 );
 
-
--- public.usertoken определение
-
--- Drop table
-
--- DROP TABLE public.usertoken;
-
-CREATE TABLE public.usertoken (
-	"token" varchar NOT NULL,
-	userid uuid NOT NULL,
-	expirationdatetimeutc timestamp NOT NULL,
-	createddatetimeutc timestamp DEFAULT now() NOT NULL,
-	modifieddatetimeutc timestamp NULL,
-	CONSTRAINT usertoken_pk PRIMARY KEY (token)
-);
