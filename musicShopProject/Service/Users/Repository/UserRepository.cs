@@ -19,9 +19,9 @@ public class UserRepository : IUserRepository
     public void Save(UserBlank.Validated validatedBlank)
     {
         String query = @$"INSERT INTO users (id, phonenumber, passwordhash, email, 
-                       createddatetimeutc, modifieddatetimeutc, isremoved, birthdate) 
+                       createddatetimeutc, modifieddatetimeutc, isremoved) 
                        VALUES (@p_id, @p_phonenumber, @p_passwordhash, null, @p_datetimeutc, 
-                       null, false, null) 
+                       null, false) 
                        ON CONFLICT (id) 
                        DO UPDATE SET
                        passwordhash = CASE WHEN @p_passwordbechanged THEN @p_passwordhash ELSE users.passwordhash END,

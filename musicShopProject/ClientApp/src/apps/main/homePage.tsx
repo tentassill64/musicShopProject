@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 export function HomePage() {
 
     return (
-        <Box>
+        <Box mt={2}>
             <Box margin={'auto 0'}>
             <Typography fontFamily={"monospace"} fontSize={40} align="center"> 
-                Добро пожаловать!
+                Добро пожаловать в систему Владислав Михеев!
             </Typography>
         </Box>
         <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">

@@ -10,4 +10,10 @@ export class SiteLinks {
         return `/products/edit/${productId}`;
     }
     static add = "/products/add";
+
+    static categories = "/categories";
+
+    static login = "/login";
+
+    static manufactor = "/manufactor"
 }

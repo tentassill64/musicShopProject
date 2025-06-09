@@ -58,7 +58,7 @@ public class Middleware
 
         //User? user = _usersService.GetUserByToken(token);
 
-        User? user = new(Guid.NewGuid(), "+7777777", "", DateOnly.MaxValue);
+        User? user = new(Guid.NewGuid(), "+7777777", "");
 
         if (user is null) return null;
 

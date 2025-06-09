@@ -6,6 +6,8 @@ namespace musicShopProject.Service.Products.Repository
     {
         void SaveProduct(ProductBlank.Validated blank, Guid requestedUserId);
         Product[] GetProducts(Guid? categoryId = null);
+        Product[] GetProducts(String searchText);
         Product? GetProduct(Guid productId);
+        Product[] GetProducts();
     }
 }

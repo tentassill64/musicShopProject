@@ -14,14 +14,20 @@ public class CategoryController : ControllerBase
     }
 
     [HttpPost("category/save")]
-    public Result AddCategory([FromBody] CategoryBlank categoryBlank, Guid requestedUserId)
-    {
-        return _categoryService.AddCategory(categoryBlank, requestedUserId);
+    public Result AddCategory([FromBody] CategoryBlank? categoryBlank)
+    {   
+        return _categoryService.AddCategory(categoryBlank);
     }
 
     [HttpGet("Category/Get/All")]
     public Category[] GetAllCategories()
     {
         return _categoryService.GetAllCategories();
+    }
+
+    [HttpPost("Category/Delete")]
+    public Result RemoveCategory([FromQuery] Guid categoryId) 
+    {
+        return _categoryService.RemoveCategory(categoryId);
     }
 }

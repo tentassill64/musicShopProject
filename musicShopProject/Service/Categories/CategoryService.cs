@@ -13,18 +13,19 @@ public class CategoryService : ICategoryService
         _categoryRepository = categoryRepository;
     }
 
-    public Result AddCategory(CategoryBlank categoryBlank, Guid requestedUserId)
+    public Result AddCategory(CategoryBlank? categoryBlank)
     {
         categoryBlank.Id ??= Guid.NewGuid();
-        return SaveCategory(categoryBlank, requestedUserId);
+        categoryBlank.CreatedUserId ??= Guid.NewGuid();
+        return SaveCategory(categoryBlank);
     }
 
-    private Result SaveCategory(CategoryBlank categoryBlank, Guid requestedUserId) 
+    private Result SaveCategory(CategoryBlank categoryBlank)
     {
         Result result = ValidateCategoryBlank(categoryBlank, out CategoryBlank.Validated validatedBlank);
         if (!result.IsSuccess) return Result.Fail(result.ErrorsAsString);
 
-        _categoryRepository.SaveCategory(validatedBlank, requestedUserId);
+        _categoryRepository.SaveCategory(validatedBlank);
 
         return Result.Success();
     }
@@ -35,9 +36,19 @@ public class CategoryService : ICategoryService
 
         if (categoryBlank.Id is not { } id) throw new Exception("id отсутствует");
 
-        if (categoryBlank.Name.IsNullOrWhiteSpace()) return Result.Fail("Не указанно имя категории");
+        if (categoryBlank.Name is not { } name) throw new Exception("Name пришло null");
 
-        validatedBlank = new CategoryBlank.Validated(id, categoryBlank.Name!);
+        if (name.IsNullOrWhiteSpace()) return Result.Fail("Не указанно имя категории");
+
+        if (categoryBlank.Photo is not { } photo) throw new Exception("Photo пришло null");
+
+        if (photo.IsNullOrWhiteSpace()) return Result.Fail("Ссылка на изображения обязательна");
+
+        if (photo.IsUrlValid()) return Result.Fail("Ссылка на изображение не корректна");
+
+        if (categoryBlank.CreatedUserId is not { } createrId) throw new Exception("Id создателя пришел Null");
+
+        validatedBlank = new CategoryBlank.Validated(id, name, photo, createrId, categoryBlank.ModifiedUserId);
 
         return Result.Success();
     }
@@ -46,5 +57,12 @@ public class CategoryService : ICategoryService
     public Category[] GetAllCategories()
     {
         return _categoryRepository.GetAllCategories();
+    }
+
+    public Result RemoveCategory(Guid categoryId)
+    {
+        _categoryRepository.RemoveCategory(categoryId);
+
+        return Result.Success();
     }
 }

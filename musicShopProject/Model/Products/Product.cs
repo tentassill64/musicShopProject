@@ -1,4 +1,6 @@
-﻿namespace musicShopProject.Model.Products;
+﻿using musicShopProject.Model.Manufacturers;
+
+namespace musicShopProject.Model.Products;
 
 public class Product
 {
@@ -6,17 +8,17 @@ public class Product
     public String Name { get; }
     public String Description { get; }
     public ProductStatus Status { get; }
-    public String Manufacturer { get; }
+    public Manufacturer Manufacturer { get; }
     public Decimal Price { get; }
     public Decimal Weight { get; }
     public Guid CategoryId { get; }
     public Boolean IsHidden { get; }
     public Int32 Quantity { get; }
-    public String[] Images {  get; }
+    public String[] Images { get; }
 
     public Product(
-        Guid id, String name, String description, 
-        ProductStatus status, String manufacturer, Decimal price, Decimal weight,
+        Guid id, String name, String description,
+        ProductStatus status, Manufacturer manufacturer, Decimal price, Decimal weight,
         Guid categoryId, Boolean isHidden, Int32 quantity, String[] images)
     {
         Id = id;

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using musicShopProject.Model.Categories;
+﻿using Microsoft.AspNetCore.Mvc;
 using musicShopProject.Model.Products;
 using musicShopProject.Service;
 using musicShopProject.Tools.Types;
@@ -25,6 +23,12 @@ public class ProductController : ControllerBase
     public Product[] GetProducts([FromQuery] Guid? categoryId)
     {
         return _productService.GetProducts(categoryId);
+    }
+
+    [HttpGet("Products/Search")]
+    public Product[] GetProducts([FromQuery] String? searchText)
+    {
+        return _productService.GetProducts(searchText);
     }
 
     [HttpGet("Product/Get")]

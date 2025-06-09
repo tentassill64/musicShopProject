@@ -140,7 +140,7 @@ export function OrderPage() {
     }
 
     return (
-        <Box>
+        <Box mt={4}>
             <Typography variant="h4" ml={2} mt={2}>
                 Заказы
             </Typography>

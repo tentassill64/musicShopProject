@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace musicShopProject.Tools.Extensions;
 
@@ -18,5 +19,11 @@ public static class StringExtensions
         Byte[] hashBytes = md5.ComputeHash(inputBytes);
 
         return Convert.ToHexString(hashBytes);
+    }
+
+    public static bool IsUrlValid(this String url)
+    {
+        string pattern = @"^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$";
+        return !Regex.IsMatch(url, pattern, RegexOptions.IgnoreCase);
     }
 }

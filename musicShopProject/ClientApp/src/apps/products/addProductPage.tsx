@@ -1,5 +1,9 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { Box, Divider, Typography, TextField, Select, MenuItem, Checkbox, FormControlLabel, Button, IconButton } from "@mui/material";
+import { 
+    Box, Divider, Typography, TextField, Select, MenuItem, Checkbox, 
+    FormControlLabel, Button, IconButton, Card, CardContent, Grid, 
+    Avatar, InputAdornment, Paper 
+} from "@mui/material";
 import { useFetcher, useNavigate, useParams } from "react-router-dom";
 import { ProductBlank } from "../../domain/products/productBlank";
 import { Category } from "../../domain/products/productsCategories/category";
@@ -9,12 +13,20 @@ import { ProductProvider } from "../../domain/products/productProvider";
 import { ProductStatus } from "../../domain/products/enum/ProductStatus";
 import { useNotifications } from "@toolpad/core";
 import AddIcon from '@mui/icons-material/Add';
+import SearchIcon from '@mui/icons-material/Search';
 import { SiteLinks } from "../../tools/links";
+import { Countries } from "../../domain/manufactures/countries";
+import { Manufacturer } from "../../domain/manufactures/manufactured";
+import { ManufacturerProvider } from "../../domain/manufactures/manufacturerProvider";
 
 export function AddProductPage() {
     const [product, setProduct] = useState<ProductBlank>(ProductBlank.getEmpty());
     const [categories, setCategories] = useState<Category[]>([]);
+    const [manufacturers, setManufacturers] = useState<Manufacturer[]>([]);
+    const [filteredManufacturers, setFilteredManufacturers] = useState<Manufacturer[]>([]);
+    const [searchTerm, setSearchTerm] = useState("");
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+    const [selectedManufacturer, setSelectedManufacturer] = useState<Manufacturer | null>(null);
     const [newPhotoUrl, setNewPhotoUrl] = useState<string>("");
 
     const navigate = useNavigate();
@@ -24,10 +36,21 @@ export function AddProductPage() {
         loadPage();
     }, [])
 
+    useEffect(() => {
+        const filtered = manufacturers.filter(manuf =>
+            manuf.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            Countries.getDisplayName(manuf.country).toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredManufacturers(filtered);
+    }, [searchTerm, manufacturers]);
+
     async function loadPage() {
         const categories = await CategoryProvider.getCategories();
+        const manufacters = await ManufacturerProvider.getManufacturer();
 
         setCategories(categories);
+        setManufacturers(manufacters);
+        setFilteredManufacturers(manufacters);
     }
 
     function changeName(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
@@ -76,11 +99,10 @@ export function AddProductPage() {
     function changeCategory(category: Category | null) {
         if(category) {
             setSelectedCategory(category);
-        setProduct(state => ({...state, 
-            categoryId: category.id
-        }))
+            setProduct(state => ({...state, 
+                categoryId: category.id
+            }))
         }
-        
     }
 
     function changeStatus(newStatus: ProductStatus | null) {
@@ -89,16 +111,21 @@ export function AddProductPage() {
         }))
     }
 
-    function changeManufacturer(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
+    function handleManufacturerSelect(manufacturer: Manufacturer) {
+        setSelectedManufacturer(manufacturer);
         setProduct(state => ({...state,
-            manufacturer: e.target.value
-        }))
+            manufacturerId: manufacturer.id
+        }));
     }
 
     function changeIsHidden(e: ChangeEvent<HTMLInputElement>) {
         setProduct(state => ({...state,
             isHidden: e.target.checked
         }))
+    }
+
+    function handleSearchChange(e: ChangeEvent<HTMLInputElement>) {
+        setSearchTerm(e.target.value);
     }
 
     async function saveProduct() {
@@ -154,14 +181,83 @@ export function AddProductPage() {
                     multiline
                     rows={4}
                 />
-                <TextField
-                    name="manufacturer"
-                    label="Производитель"
-                    value={product.manufacturer || ""}
-                    onChange={changeManufacturer}
-                    fullWidth
-                    margin="normal"
-                />
+                
+                {/* Секция выбора производителя */}
+                <Typography variant="h6" mt={2} mb={1}>Производитель</Typography>
+                <Paper elevation={2} sx={{ p: 2, mb: 2 }}>
+                    <TextField
+                        fullWidth
+                        variant="outlined"
+                        placeholder="Поиск производителя..."
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <SearchIcon />
+                                </InputAdornment>
+                            ),
+                        }}
+                        sx={{ mb: 2 }}
+                    />
+                    
+                    {selectedManufacturer && (
+                        <Box sx={{ mb: 2, p: 1, border: '1px solid #ccc', borderRadius: 1 }}>
+                            <Typography variant="subtitle1">Выбранный производитель:</Typography>
+                            <Box display="flex" alignItems="center" mt={1}>
+                                {selectedManufacturer.logo && (
+                                    <Avatar 
+                                        src={selectedManufacturer.logo} 
+                                        alt={selectedManufacturer.name}
+                                        sx={{ width: 40, height: 40, mr: 2 }}
+                                    />
+                                )}
+                                <Box>
+                                    <Typography fontWeight="bold">{selectedManufacturer.name}</Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        {Countries.getDisplayName(selectedManufacturer.country)}
+                                    </Typography>
+                                </Box>
+                            </Box>
+                        </Box>
+                    )}
+                    
+                    <Grid container spacing={2}>
+                        {filteredManufacturers.map(manufacturer => (
+                            <Grid item xs={12} sm={6} md={4} key={manufacturer.id}>
+                                <Card 
+                                    onClick={() => handleManufacturerSelect(manufacturer)}
+                                    sx={{ 
+                                        cursor: 'pointer',
+                                        border: selectedManufacturer?.id === manufacturer.id 
+                                            ? '2px solid #1976d2' 
+                                            : '1px solid #e0e0e0',
+                                        '&:hover': {
+                                            boxShadow: 3,
+                                        }
+                                    }}
+                                >
+                                    <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
+                                        {manufacturer.logo && (
+                                            <Avatar 
+                                                src={manufacturer.logo} 
+                                                alt={manufacturer.name}
+                                                sx={{ width: 40, height: 40, mr: 2 }}
+                                            />
+                                        )}
+                                        <Box>
+                                            <Typography fontWeight="bold">{manufacturer.name}</Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                {Countries.getDisplayName(manufacturer.country)}
+                                            </Typography>
+                                        </Box>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Paper>
+                
                 <CSelect
                     options={categories}
                     label="Категория"
@@ -238,9 +334,12 @@ export function AddProductPage() {
                         </ul>
                     </Box>
                 )}
-                <Button variant="contained" 
-                        color="primary"
-                        onClick={saveProduct}>
+                <Button 
+                    variant="contained" 
+                    color="primary"
+                    onClick={saveProduct}
+                    sx={{ mt: 2 }}
+                >
                     Сохранить
                 </Button>
             </Box>

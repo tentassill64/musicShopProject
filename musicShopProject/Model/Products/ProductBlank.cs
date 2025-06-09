@@ -8,7 +8,7 @@ public partial class ProductBlank
     public Guid? CategoryId { get; set; }
     public Decimal? Price { get; set; }
     public Decimal? Weight { get; set; }
-    public String? Manufacturer { get; set; }
+    public Guid? ManufacturerId { get; set; }
     public Int32? Quantity { get; set; }
     public String[]? Images {  get; set; }
     public Int32? Status { get; set; }
@@ -24,7 +24,7 @@ public partial class ProductBlank
         public Guid CategoryId { get; }
         public Decimal Price { get; }
         public Decimal Weight { get; }
-        public String Manufacturer { get; }
+        public Guid ManufacturerId { get; }
         public Int32 Quantity { get; }
         public String[] Images { get; }
         public Int32 Status { get; }
@@ -33,7 +33,7 @@ public partial class ProductBlank
 
         public Validated(
             Guid id, String name, String description, Decimal price, 
-            Guid categoryId, Decimal weight, String manufacturer, 
+            Guid categoryId, Decimal weight, Guid manufacturer, 
             Int32 quantity, String[] image, Int32 status, Boolean isHidden
             //Guid userId
         )
@@ -44,7 +44,7 @@ public partial class ProductBlank
             CategoryId = categoryId;
             Price = price;
             Weight = weight;
-            Manufacturer = manufacturer;
+            ManufacturerId = manufacturer;
             Quantity = quantity;
             Images = image;
             Status = status;

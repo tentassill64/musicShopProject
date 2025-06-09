@@ -24,7 +24,7 @@ public class UserController : ControllerBase
     public record LoginRequest(String? PhoneNumber, String? Password);
 
     [HttpPost("login")]
-    public Result Login([FromBody] LoginRequest loginRequest)
+    public DataResult<User> Login([FromBody] LoginRequest loginRequest)
     {
         return _userService.Login(loginRequest.PhoneNumber, loginRequest.Password);
     }
@@ -36,7 +36,7 @@ public class UserController : ControllerBase
         return _userService.GetAllUsers();
     }
 
-    [HttpGet("user/phone")]
+    [HttpGet("User/Phone")]
     public User? GetUser([FromQuery] String phoneNumber)
     {
        return _userService.GetUser(phoneNumber);

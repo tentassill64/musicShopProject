@@ -7,6 +7,6 @@ public static class UserConverter
 {
     public static User ToUser(this UserDB db)
     {
-        return new User(db.Id, db.PhoneNumber, db.Email, db.BirthDate);
+        return new User(db.Id, db.PhoneNumber, db.Email);
     }
 }

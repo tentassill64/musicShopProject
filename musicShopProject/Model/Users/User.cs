@@ -8,15 +8,13 @@ public class User
     public Guid Id { get; }
     public String PhoneNumber { get; }
     public String? Email { get; }
-    public DateOnly? BirthDate { get; }
     [JsonIgnore]
     public String PasswordHash { get; }
 
-    public User(Guid id, String phoneNumber, String? email, DateOnly? birthDate)
+    public User(Guid id, String phoneNumber, String? email)
     {
         Id = id;
         PhoneNumber = phoneNumber;
         Email = email;
-        BirthDate = birthDate;
     }
 }

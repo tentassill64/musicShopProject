@@ -2,6 +2,7 @@
 using musicShopProject.Service.Users.Repository;
 using musicShopProject.Tools.Extensions;
 using musicShopProject.Tools.Types;
+using System.Text.RegularExpressions;
 
 namespace musicShopProject.Service.Users;
 
@@ -14,16 +15,16 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public Result Login(String? phoneNumber, String? password)
+    public DataResult<User> Login(String? phoneNumber, String? password)
     {
-        if (phoneNumber.IsNullOrWhiteSpace()) return Result.Fail("Укажите логин");
-        if (password.IsNullOrWhiteSpace()) return Result.Fail("Укажите пароль");
+        if (phoneNumber.IsNullOrWhiteSpace()) return DataResult<User>.Fail("Укажите логин");
+        if (password.IsNullOrWhiteSpace()) return DataResult<User>.Fail("Укажите пароль");
 
         User? existUser = _userRepository.GetUserByPhoneNumber(phoneNumber!, password!.GetHash());
-        if(existUser is null) return Result.Fail("Такого пользователя не существует");
+        if (existUser is not { } user) return DataResult<User>.Fail("Неправильный логин или пароль");
 
-        return Result.Success();
-    }   
+        return DataResult<User>.Success(user);
+    }
 
     public Result Register(UserBlank blank)
     {
@@ -48,8 +49,7 @@ public class UserService : IUserService
 
         if (blank.Password.IsNullOrWhiteSpace() && blank.PasswordBeChanged) return Result.Fail("Укажите пароль");
         if (blank.PhoneNumber.IsNullOrWhiteSpace()) return Result.Fail("Укажите номер телефона");
-
-        //Валидация номера
+        if (!Regex.IsMatch(blank.PhoneNumber, @"^\+?[1-9][0-9]{7,14}$")) return Result.Fail("Номер телефона указан не корректно");
 
         Password password = new(
             isCreating

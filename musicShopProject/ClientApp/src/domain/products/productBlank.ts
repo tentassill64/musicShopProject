@@ -1,3 +1,4 @@
+import { Manufacturer } from "../manufactures/manufactured";
 import { ProductStatus } from "./enum/ProductStatus";
 import { Product } from "./product";
 
@@ -5,7 +6,7 @@ export interface ProductBlank{
     id: string | null,
     name: string | null,
     description: string | null,
-    manufacturer: string | null,
+    manufacturer: Manufacturer | null,
     status: ProductStatus,
     price: number, 
     weight: number,

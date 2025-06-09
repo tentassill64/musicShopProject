@@ -5,7 +5,8 @@ namespace musicShopProject.Service
 {
     public interface ICategoryService
     {
-        Result AddCategory(CategoryBlank categoryBlank, Guid requestedUserId);
+        Result AddCategory(CategoryBlank? categoryBlank);
         Category[] GetAllCategories();
+        Result RemoveCategory(Guid categoryId);
     }
 }

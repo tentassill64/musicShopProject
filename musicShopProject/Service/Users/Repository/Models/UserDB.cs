@@ -9,5 +9,4 @@ public class UserDB
     public DateTime CreateDateTimeUtc { get; set; }
     public DateTime? ModifiedDateTimeUtc { get; set; }
     public Boolean IsRemoved { get; set; }
-    public DateOnly? BirthDate { get; set; }
 }

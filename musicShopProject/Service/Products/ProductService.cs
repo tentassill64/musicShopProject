@@ -27,6 +27,11 @@ public class ProductService : IProductService
         return _productRepository.GetProducts(categoryId);
     }
 
+    public Product[] GetProducts()
+    {
+        return _productRepository.GetProducts();
+    }
+
     private Result SaveProduct(ProductBlank blank, Guid requestedUserId)
     {
         Result validateResult = ValidateProductBlank(blank, out ProductBlank.Validated validatedProduct);
@@ -41,13 +46,13 @@ public class ProductService : IProductService
     {
         validatedProduct = null!;
 
-        if (blank.Id is not {} id) throw new Exception("id продукта пуст");
+        if (blank.Id is not { } id) throw new Exception("id продукта пуст");
 
         if (blank.Name.IsNullOrWhiteSpace()) return Result.Fail("Укажите название товара");
-        if (blank.CategoryId is not {} categoryId) return Result.Fail("Укажите категорию товара");
+        if (blank.CategoryId is not { } categoryId) return Result.Fail("Укажите категорию товара");
         if (blank.Description.IsNullOrWhiteSpace()) return Result.Fail("Укажите описание товара");
 
-        if (blank.Price is not {} price) return Result.Fail("Укажите цену");
+        if (blank.Price is not { } price) return Result.Fail("Укажите цену");
         if (price <= 0) return Result.Fail("Цена не может быть меньше или равна 0");
 
         if (blank.Weight is not { } weight) return Result.Fail("Укажите вес");
@@ -55,7 +60,7 @@ public class ProductService : IProductService
 
         if (blank.Images.Length < 0) return Result.Fail("Добавьте фотографии");
 
-        if (blank.Manufacturer.IsNullOrWhiteSpace()) return Result.Fail("Укажите производителя");
+        if (blank.ManufacturerId is not { } manufacturerId) return Result.Fail("Укажите производителя");
 
         if (blank.Quantity is not { } quantity) return Result.Fail("Укажите количество");
         if (quantity < 0) return Result.Fail("Количество не может быть меньше 0");
@@ -70,7 +75,7 @@ public class ProductService : IProductService
 
         validatedProduct = new ProductBlank.Validated(
             id, blank.Name!, blank.Description!, price,
-            categoryId, weight, blank.Manufacturer!, quantity,
+            categoryId, weight, manufacturerId, quantity,
             blank.Images!, status, isHidden
         );
 
@@ -85,5 +90,10 @@ public class ProductService : IProductService
     public Product? GetProduct(Guid productId)
     {
         return _productRepository.GetProduct(productId);
+    }
+
+    public Product[] GetProducts(string? searchText)
+    {
+        return _productRepository.GetProducts(searchText ?? String.Empty);
     }
 }

@@ -7,6 +7,6 @@ public static class CategoryConverter
 {
     public static Category ToCategory(this CategoryDB db)
     {
-        return new Category(db.Id, db.Name);
+        return new Category(db.Id, db.Name, db.Photo, db.CreatedUserId, db.ModifiedUserId);
     }
 }

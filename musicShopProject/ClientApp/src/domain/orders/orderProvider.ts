@@ -16,6 +16,15 @@ export class OrderProvider {
         return new PagedResult(values, totalRows);
     } 
 
+    static async getOrderPageByUser(userId:string ,page: number, pageSize: number): Promise<PagedResult<Order>> {
+        const response = await HttpClient.get("Orders/GetPage/User", {userId, page, pageSize});
+
+        const totalRows = response.totalRows;
+        const values =  mapToOrders((response.values as Order[]));
+
+        return new PagedResult(values, totalRows);
+    } 
+
     static async changeState(state: OrderState, orderId: string): Promise<Result> {
         const response = await HttpClient.post("Order/Change/State", {state, orderId});
 

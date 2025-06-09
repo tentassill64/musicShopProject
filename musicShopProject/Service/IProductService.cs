@@ -9,4 +9,6 @@ public interface IProductService
     Product[] GetProducts(Guid? categoryId = null);
     Result UpdateProduct(ProductBlank blank, Guid requestedUserId);
     Product? GetProduct(Guid productId);
+    Product[] GetProducts(String? searchText);
+    Product[] GetProducts();
 }
