@@ -206,7 +206,6 @@ const Header: React.FC<HeaderProps> = ({ siteName = "TentaShop", logoUrl = "/log
 
     try {
       if (isLoginMode) {
-        // Логин
         const result = await UserProvider.login(phoneNumber, password);
         if (result.result.isSuccess && result.data) {
           login(result.data);
@@ -218,7 +217,6 @@ const Header: React.FC<HeaderProps> = ({ siteName = "TentaShop", logoUrl = "/log
           }
         }
       } else {
-        // Регистрация
         const userBlank: UserBlank = {
           id: null,
           phoneNumber,
@@ -247,7 +245,6 @@ const Header: React.FC<HeaderProps> = ({ siteName = "TentaShop", logoUrl = "/log
     <>
       <AppBar position="sticky" color="primary" elevation={1}>
         <Toolbar>
-          {/* Логотип и название сайта */}
           <Box 
             sx={{ 
               display: 'flex', 
@@ -277,7 +274,6 @@ const Header: React.FC<HeaderProps> = ({ siteName = "TentaShop", logoUrl = "/log
             </Typography>
           </Box>
 
-          {/* Поиск */}
           <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
             <Search sx={{ width: { xs: '100%', md: '60%' } }}>
               <SearchIconWrapper>
@@ -369,7 +365,6 @@ const Header: React.FC<HeaderProps> = ({ siteName = "TentaShop", logoUrl = "/log
             )}
           </Box>
 
-          {/* Кнопки пользователя и корзины */}
                <Box sx={{ display: 'flex' }}>
             {isAuthenticated ? (
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -445,7 +440,7 @@ const Header: React.FC<HeaderProps> = ({ siteName = "TentaShop", logoUrl = "/log
           </Box>
         </Toolbar>
       </AppBar>
-{/* Модалка авторизации/регистрации */}
+
       <Dialog open={authModalOpen} onClose={handleAuthModalClose}>
         <DialogTitle>
           {isLoginMode ? 'Вход в систему' : 'Регистрация'}
@@ -507,7 +502,6 @@ const Header: React.FC<HeaderProps> = ({ siteName = "TentaShop", logoUrl = "/log
         </DialogActions>
       </Dialog>
 
-      {/* Уведомления */}
       <Snackbar
         open={!!successMessage}
         autoHideDuration={6000}
@@ -522,7 +516,6 @@ const Header: React.FC<HeaderProps> = ({ siteName = "TentaShop", logoUrl = "/log
         </Alert>
       </Snackbar>
 
-      {/* Выпадающее окно корзины */}
 <Popover
   id="cart-popover"
   open={isCartOpen}
@@ -551,7 +544,6 @@ const Header: React.FC<HeaderProps> = ({ siteName = "TentaShop", logoUrl = "/log
     flexDirection: 'column',
     overflow: 'hidden'
   }}>
-    {/* Заголовок и кнопка закрытия - сдвинута левее */}
     <Box sx={{
       display: 'flex',
       justifyContent: 'space-between',
@@ -564,7 +556,7 @@ const Header: React.FC<HeaderProps> = ({ siteName = "TentaShop", logoUrl = "/log
         onClick={handleCartClose}
         sx={{
           position: 'absolute',
-          right: 8,  // Уменьшил с 0 до 8
+          right: 8,
           top: 0
         }}
       >
@@ -578,7 +570,7 @@ const Header: React.FC<HeaderProps> = ({ siteName = "TentaShop", logoUrl = "/log
       </Box>
     ) : (
       <>
-        {/* Список товаров */}
+
         <List sx={{ 
           maxHeight: '50vh',
           overflow: 'auto',
@@ -646,13 +638,12 @@ const Header: React.FC<HeaderProps> = ({ siteName = "TentaShop", logoUrl = "/log
           ))}
         </List>
 
-        {/* Блок с итого и кнопкой - сдвинут левее */}
         <Box sx={{
           mt: 2,
           pt: 2,
           borderTop: '1px solid',
           borderColor: 'divider',
-          width: 'calc(100% - 16px)', // Уменьшил отступ с 32px до 16px
+          width: 'calc(100% - 16px)',
           mx: 'auto'
         }}>
           <Box sx={{ 
@@ -660,7 +651,7 @@ const Header: React.FC<HeaderProps> = ({ siteName = "TentaShop", logoUrl = "/log
             justifyContent: 'space-between',
             alignItems: 'center',
             mb: 2,
-            px: 1  // Добавил горизонтальный padding
+            px: 1 
           }}>
             <Typography variant="h6">
               Итого:
@@ -676,7 +667,7 @@ const Header: React.FC<HeaderProps> = ({ siteName = "TentaShop", logoUrl = "/log
             onClick={handleCheckout}
             fullWidth
             sx={{
-              px: 1  // Добавил горизонтальный padding
+              px: 1 
             }}
           >
             Оформить заказ

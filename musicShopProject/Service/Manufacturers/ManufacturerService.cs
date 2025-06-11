@@ -20,6 +20,7 @@ public class ManufacturerService : IManufacturerService
 
     public Result SaveManufacturer(ManufacturerBlank? manufacturerBlank)
     {
+        manufacturerBlank.Id ??= Guid.NewGuid();
         Result validatedResult = ManufacturerBlankPreProcess(manufacturerBlank, out ManufacturerBlank.Validated validatedManufacturerBlank);
         if (!validatedResult.IsSuccess) return Result.Fail(validatedResult.Errors.FirstOrDefault());
 

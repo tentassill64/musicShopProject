@@ -49,11 +49,9 @@ export const CheckoutPage = () => {
   const { cartItems, totalPrice, clearCart } = useCart();
   const navigate = useNavigate();
 
-  // Контактные данные
   const [email, setEmail] = useState(user?.email || '');
   const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber || '');
-  
-  // Адрес доставки (разделенный по полям)
+
   const [address, setAddress] = useState<AddressBlank>(AddressBlank.getEmpty(uuidv4()));
 
   const [paymentMethod, setPaymentMethod] = useState('cash');
@@ -102,7 +100,7 @@ export const CheckoutPage = () => {
         price: totalPrice,
         clientPhoneNumber: phoneNumber,
         ClientId: user?.id || uuidv4() ,
-        AddressId: address.id, // Можно заменить на реальный ID адреса
+        AddressId: address.id, 
         CompletedDateTimeUtc: new Date(),
         CreatedDateTimeUtc: new Date(),
         State: 1,
@@ -140,7 +138,7 @@ const handleAuthSubmit = async () => {
 
     try {
       if (isLoginMode) {
-        // Логин
+
         const result = await UserProvider.login(phoneNumber, password);
         if (result.result.isSuccess && result.data) {
           login(result.data);
@@ -152,7 +150,6 @@ const handleAuthSubmit = async () => {
           }
         }
       } else {
-        // Регистрация
         const userBlank: UserBlank = {
           id: null,
           phoneNumber,
@@ -203,7 +200,6 @@ const handleAuthSubmit = async () => {
       return false;
     }
 
-    // Проверка всех полей адреса
     if (!address.city || !address.street || !address.home || !address.apartment) {
       setError('Пожалуйста, заполните все поля адреса');
       return false;
@@ -229,13 +225,12 @@ const handleAuthSubmit = async () => {
         flexDirection: { xs: 'column', md: 'row' },
         gap: 3 
       }}>
-        {/* Левая часть - основная форма */}
+
         <Box sx={{ flex: 1 }}>
           <Typography variant="h4" gutterBottom>
             Оформление заказа
           </Typography>
 
-          {/* Блок 1: Контактные данные */}
           <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
             {!isAuthenticated ? (
               <>
@@ -267,7 +262,6 @@ const handleAuthSubmit = async () => {
             </Box>
           </Paper>
 
-          {/* Блок 2: Адрес доставки */}
           <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
             <Typography variant="h6" gutterBottom>
               Адрес доставки
@@ -312,7 +306,6 @@ const handleAuthSubmit = async () => {
             </Box>
           </Paper>
 
-          {/* Блок 3: Товары */}
           <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
             <Typography variant="h6" gutterBottom>
               Товары в заказе
@@ -348,7 +341,6 @@ const handleAuthSubmit = async () => {
             </Box>
           </Paper>
 
-          {/* Блок 4: Способ оплаты */}
           <Paper elevation={2} sx={{ p: 3 }}>
             <Typography variant="h6" gutterBottom>
               Способ оплаты
@@ -373,7 +365,6 @@ const handleAuthSubmit = async () => {
           </Paper>
         </Box>
 
-        {/* Правая часть - итоговая информация */}
         <Box sx={{ 
           width: { xs: '100%', md: 350 },
           position: { md: 'sticky' },

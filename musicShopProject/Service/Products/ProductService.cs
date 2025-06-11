@@ -69,9 +69,9 @@ public class ProductService : IProductService
 
         if (blank.IsHidden is not { } isHidden) return Result.Fail("Укажите видимость");
 
-        _imageService.Save(blank.Images, out String[] imagesPaths);
+        //_imageService.Save(blank.Images, out String[] imagesPaths);
 
-        blank.Images = imagesPaths ?? blank.Images;
+        //blank.Images = imagesPaths ?? blank.Images;
 
         validatedProduct = new ProductBlank.Validated(
             id, blank.Name!, blank.Description!, price,

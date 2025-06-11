@@ -28,7 +28,6 @@ export const ProductsPage = () => {
   const navigate = useNavigate();
   const { addToCart } = useCart();
 
-  // Filters state
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
   const [weightRange, setWeightRange] = useState<[number, number]>([0, 100]);
   const [selectedStatuses, setSelectedStatuses] = useState<ProductStatus[]>([]);
@@ -95,7 +94,6 @@ export const ProductsPage = () => {
     );
   };
 
-  // Get unique manufacturers from products
   const allManufacturers = Array.from(
     new Map(
       products.map(product => [product.manufacturer.id, product.manufacturer])
@@ -116,13 +114,13 @@ export const ProductsPage = () => {
       py: 4,
       px: { xs: 2, sm: 3, md: 4 }
     }}>
-      {/* Main layout with two columns using Box */}
+
       <Box sx={{ 
         display: 'flex', 
         flexDirection: { xs: 'column', md: 'row' }, 
         gap: 4 
       }}>
-        {/* Filters column */}
+
         <Box sx={{ 
           width: { xs: '100%', md: '300px' },
           flexShrink: 0,
@@ -203,7 +201,6 @@ export const ProductsPage = () => {
           </Box>
         </Box>
 
-        {/* Products column */}
         <Box sx={{ flexGrow: 1 }}>
           <Typography variant="h5" gutterBottom sx={{ mb: 3 }}>
             Товары ({filteredProducts.length})

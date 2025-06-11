@@ -9,9 +9,9 @@ type GridProps = {
   md?: number;
   lg?: number;
   spacing?: number;
-  component?: React.ElementType; // Добавляем поддержку component
+  component?: React.ElementType;
   children: React.ReactNode;
-  sx?: React.CSSProperties; // Добавляем поддержку sx (опционально)
+  sx?: React.CSSProperties;
 };
 
 const StyledDiv = styled('div')({
@@ -31,7 +31,7 @@ const CustomGrid = React.forwardRef<HTMLDivElement, GridProps>(
 const styles: React.CSSProperties = {
       ...(container && {
         display: 'flex',
-        flexWrap: 'wrap' as const, // Явное приведение типа
+        flexWrap: 'wrap' as const,
         margin: `-${spacing / 2}px`,
         width: `calc(100% + ${spacing}px)`,
       }),

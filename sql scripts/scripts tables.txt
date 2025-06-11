@@ -16,6 +16,7 @@ CREATE TABLE public.address (
 	CONSTRAINT address_pk PRIMARY KEY (id)
 );
 
+
 -- public.categories определение
 
 -- Drop table
@@ -30,9 +31,47 @@ CREATE TABLE public.categories (
 	modifieddatetimeutc timestamp NULL,
 	createduserid uuid NOT NULL,
 	modifieduserid uuid NULL,
+	photo varchar NOT NULL,
 	CONSTRAINT category_pk PRIMARY KEY (id),
 	CONSTRAINT category_unique UNIQUE (name)
 );
+
+
+-- public.employees определение
+
+-- Drop table
+
+-- DROP TABLE public.employees;
+
+CREATE TABLE public.employees (
+	id uuid NOT NULL,
+	passwordhash varchar NOT NULL,
+	email varchar NOT NULL,
+	createddatetimeutc timestamp NOT NULL,
+	modifieddatetimeutc timestamp NULL,
+	isremoved bool DEFAULT false NOT NULL,
+	phonenumber varchar NULL,
+	CONSTRAINT employee_pk PRIMARY KEY (id)
+);
+
+
+-- public.manufacturers определение
+
+-- Drop table
+
+-- DROP TABLE public.manufacturers;
+
+CREATE TABLE public.manufacturers (
+	id uuid NOT NULL,
+	"name" varchar NOT NULL,
+	logo varchar NOT NULL,
+	createddatetimeutc timestamp NOT NULL,
+	modifieddatetimeutc timestamp NULL,
+	isremoved bool DEFAULT false NOT NULL,
+	country int4 NOT NULL,
+	CONSTRAINT manufacturers_pk PRIMARY KEY (id)
+);
+
 
 -- public.orderitems определение
 
@@ -48,8 +87,10 @@ CREATE TABLE public.orderitems (
 	isremoved bool DEFAULT false NOT NULL,
 	createddatetimeutc timestamp DEFAULT now() NOT NULL,
 	modifieddatetimeutc timestamp NULL,
-	productcategoryid uuid NOT NULL
+	productcategoryid uuid NOT NULL,
+	CONSTRAINT orderitems_pk PRIMARY KEY (id)
 );
+
 
 -- public.orders определение
 
@@ -72,6 +113,7 @@ CREATE TABLE public.orders (
 	CONSTRAINT orders_pk PRIMARY KEY (id)
 );
 
+
 -- public.products определение
 
 -- Drop table
@@ -84,7 +126,7 @@ CREATE TABLE public.products (
 	description varchar NOT NULL,
 	price numeric(12, 4) NOT NULL,
 	weight numeric NOT NULL,
-	manufacturer varchar NOT NULL,
+	manufacturerid uuid NOT NULL,
 	quantity int4 NOT NULL,
 	images _varchar NULL,
 	status int4 NOT NULL,
@@ -97,6 +139,7 @@ CREATE TABLE public.products (
 	modifieduserid uuid NULL,
 	CONSTRAINT product_pk PRIMARY KEY (id)
 );
+
 
 -- public.users определение
 
@@ -112,7 +155,5 @@ CREATE TABLE public.users (
 	createddatetimeutc timestamp NOT NULL,
 	modifieddatetimeutc timestamp NULL,
 	isremoved bool DEFAULT false NOT NULL,
-	birthdate date NULL,
 	CONSTRAINT user_pk PRIMARY KEY (id)
 );
-

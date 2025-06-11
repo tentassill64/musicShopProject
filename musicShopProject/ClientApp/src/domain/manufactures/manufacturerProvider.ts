@@ -1,4 +1,6 @@
 import { HttpClient } from "../../tools/httpClient";
+import { mapToResult, Result } from "../../tools/types/results";
+import { ManufacturerBlank } from "./manufacturerBlank";
 import { Manufacturer, mapToManufacturers } from "./manufactured";
 
 export class ManufacturerProvider {
@@ -10,4 +12,13 @@ export class ManufacturerProvider {
 
         return values;
     } 
+
+    static async saveManufacturer(manufacturerBlank: ManufacturerBlank) :Promise<Result> {
+
+        const response = await HttpClient.post("Manufacturer/Save", manufacturerBlank);
+
+        const result = mapToResult(response);
+
+        return response;
+    }
 }

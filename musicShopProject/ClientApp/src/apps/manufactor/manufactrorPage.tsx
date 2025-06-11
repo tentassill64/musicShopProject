@@ -21,14 +21,14 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNotifications } from "@toolpad/core";
 import { Manufacturer } from "../../domain/manufactures/manufactured";
-import { ManufactorBlank } from "../../domain/manufactures/manufactorBlank";
+import { ManufacturerBlank } from "../../domain/manufactures/manufacturerBlank";
 import { ManufacturerProvider } from "../../domain/manufactures/manufacturerProvider";
 import { Countries } from "../../domain/manufactures/countries";
 
 export function ManufactorPage() {
     const [manufacturers, setManufacturers] = useState<Manufacturer[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [manufactorBlank, setManufactorBlank] = useState<ManufactorBlank>(ManufactorBlank.getEmpty());
+    const [manufactorBlank, setManufactorBlank] = useState<ManufacturerBlank>(ManufacturerBlank.getEmpty());
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
 
@@ -75,21 +75,17 @@ export function ManufactorPage() {
         e.preventDefault();
         
         if (!manufactorBlank.name) {
-            setError("Name is required");
+            setError("Название обязательно");
             return;
         }
 
         if (!manufactorBlank.country) {
-            setError("Country is required");
+            setError("Страна обязательна");
             return;
         }
-
         try {
-            // Здесь должен быть вызов API для сохранения производителя
-            // const result = await ManufacturerProvider.saveManufacturer(manufactorBlank);
+            const result = await ManufacturerProvider.saveManufacturer(manufactorBlank);
             
-            // Временная имитация успешного сохранения
-            const result = { isSuccess: true };
             
             if(result.isSuccess) {
                 notification.show("Успешно", {
@@ -101,31 +97,20 @@ export function ManufactorPage() {
                     severity: 'error',
                     autoHideDuration: 3000
                 });
+                 setError(result.errorsString);
             }
 
-            setManufactorBlank(ManufactorBlank.getEmpty());
+            setManufactorBlank(ManufacturerBlank.getEmpty());
             setImagePreview(null);
             setError(null);
             await loadManufacturers();
-        } catch (e) {
-            console.error("Failed to save manufacturer", e);
-            setError("Failed to save manufacturer");
         }
+        catch(e) {
+            setError("Добавьте фотографию")
+        }
+           
     };
 
-    const handleDelete = async (id: string) => {
-        try {
-            // Здесь должен быть вызов API для удаления производителя
-            // await ManufacturerProvider.deleteManufacturer(id);
-            
-            await loadManufacturers();
-        } catch (e) {
-            console.error("Failed to delete manufacturer", e);
-            setError("Failed to delete manufacturer");
-        }
-    };
-
-    // Получаем массив стран для Select
     const countryEntries = Object.entries(Countries)
         .filter(([key]) => isNaN(Number(key)))
         .map(([key, value]) => ({
@@ -140,7 +125,6 @@ export function ManufactorPage() {
             </Typography>
             
             <Grid container spacing={3}>
-                {/* Форма создания нового производителя */}
                 <Grid item xs={12} md={6}>
                     <Paper elevation={3} sx={{ p: 3 }}>
                         <Typography variant="h6" gutterBottom>
@@ -234,7 +218,6 @@ export function ManufactorPage() {
                     </Paper>
                 </Grid>
                 
-                {/* Список существующих производителей */}
                 <Grid item xs={12} md={6}>
                     <Paper elevation={3} sx={{ p: 3 }}>
                         <Typography variant="h6" gutterBottom>
@@ -273,14 +256,6 @@ export function ManufactorPage() {
                                                     <Typography variant="body2" color="text.secondary">
                                                         Страна: {Countries.getDisplayName(manufacturer.country)}
                                                     </Typography>
-                                                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                                        <IconButton
-                                                            color="error"
-                                                            onClick={() => handleDelete(manufacturer.id)}
-                                                        >
-                                                            <DeleteIcon />
-                                                        </IconButton>
-                                                    </Box>
                                                 </CardContent>
                                             </Card>
                                         </Grid>

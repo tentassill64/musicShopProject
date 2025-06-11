@@ -41,7 +41,6 @@ export namespace Countries {
             case Countries.SouthKorea: return "Южная Корея";
             case Countries.China: return "Китай";
             case Countries.Australia: return "Австралия";
-            default: return "Неизвестная страна";
         }
     }
 }

@@ -49,17 +49,14 @@ export function ProductsPage() {
     function applyFilters() {
         let result = [...products];
         
-        // Фильтрация по поисковому запросу
         if (searchQuery) {
             const query = searchQuery.toLowerCase();
             result = result.filter(product => 
                 product.name.toLowerCase().includes(query) ||
                 product.description.toLowerCase().includes(query) 
-                // product.manufacturer.toLowerCase().includes(query)
             );
         }
         
-        // Фильтрация по статусу
         if (statusFilter !== "all") {
             result = result.filter(product => product.status === statusFilter);
         }
@@ -80,7 +77,6 @@ export function ProductsPage() {
         return `/images/products/${imageName}`;
     };
 
-    // Получаем все возможные значения enum
     const allStatusValues = Object.values(ProductStatus)
         .filter(value => typeof value === 'number') as ProductStatus[];
 
@@ -101,7 +97,6 @@ export function ProductsPage() {
             
             <Divider sx={{ mb: 3 }}/>
 
-            {/* Панель фильтров и поиска */}
             <Box sx={{ mb: 3 }}>
                 <Stack direction="row" spacing={2} alignItems="center">
                     <TextField
@@ -150,7 +145,6 @@ export function ProductsPage() {
                 </Stack>
             </Box>
 
-            {/* Список продуктов */}
             {filteredProducts.length > 0 ? (
                 <Grid container spacing={3}>
                     {filteredProducts.map((product) => (
@@ -159,7 +153,7 @@ export function ProductsPage() {
                                 <CardMedia
                                     component="img"
                                     height="200"
-                                    image={transformImagePath(product.images[0] ?? noImage)}
+                                    image={product.images[0]}
                                     alt={product.name}
                                     sx={{ objectFit: 'contain', p: 1 }}
                                 />
@@ -167,9 +161,6 @@ export function ProductsPage() {
                                     <Typography gutterBottom variant="h6" component="div">
                                         {product.name}
                                     </Typography>
-                                    {/* <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                                        {product.manufacturer}
-                                    </Typography> */}
                                     <Typography variant="body2" sx={{ mb: 1 }}>
                                         {product.description.length > 50 
                                             ? `${product.description.substring(0, 50)}...` 

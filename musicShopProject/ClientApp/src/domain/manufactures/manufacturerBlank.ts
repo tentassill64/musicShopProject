@@ -1,15 +1,15 @@
 import { Countries } from "./countries";
 import { Manufacturer } from "./manufactured";
 
-export interface ManufactorBlank{
+export interface ManufacturerBlank{
     id: string | null,
     name: string | null,
     logo: string | null,
     country: Countries | null
 }
 
-export namespace ManufactorBlank {
-    export function getEmpty(): ManufactorBlank {
+export namespace ManufacturerBlank {
+    export function getEmpty(): ManufacturerBlank {
         return {
             id: null,
             name: null,
@@ -18,7 +18,7 @@ export namespace ManufactorBlank {
         };
     }
 
-    export function toProductBlank(category: Manufacturer): ManufactorBlank {
+    export function toProductBlank(category: Manufacturer): ManufacturerBlank {
         return {
             id: category.id,
             name: category.name,

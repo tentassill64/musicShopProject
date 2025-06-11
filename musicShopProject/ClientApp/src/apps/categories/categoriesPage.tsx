@@ -26,8 +26,8 @@ export function CategoriesPage() {
             const loadedCategories = await CategoryProvider.getCategories();
             setCategories(loadedCategories);
         } catch (e) {
-            console.error("Failed to load categories", e);
-            setError("Failed to load categories");
+            console.error("Проблема с загрузкой категорий", e);
+            setError("");
         } finally {
             setLoading(false);
         }
@@ -40,7 +40,6 @@ export function CategoriesPage() {
             [name]: value
         }));
 
-        // Если меняется поле photo, обновляем превью
         if (name === 'photo') {
             setImagePreview(value || null);
         }
@@ -50,7 +49,7 @@ export function CategoriesPage() {
         e.preventDefault();
         
         if (!categoryBlank.name) {
-            setError("Name is required");
+            setError("Название обязательно");
             return;
         }
 
@@ -74,8 +73,8 @@ export function CategoriesPage() {
             setError(null);
             await loadCategories();
         } catch (e) {
-            console.error("Проблема с сохранением категории", e);
-            setError("Проблема с сохранением категории");
+            console.error("Добавьте фотографию", e);
+            setError("Добавьте фотографию");
         }
     };
 
@@ -97,7 +96,6 @@ export function CategoriesPage() {
             </Typography>
             
             <Grid container spacing={3}>
-                {/* Форма создания новой категории */}
                 <Grid item xs={12} md={6}>
                     <Paper elevation={3} sx={{ p: 3 }}>
                         <Typography variant="h6" gutterBottom>
@@ -171,7 +169,6 @@ export function CategoriesPage() {
                     </Paper>
                 </Grid>
                 
-                {/* Список существующих категорий */}
                 <Grid item xs={12} md={6}>
                     <Paper elevation={3} sx={{ p: 3 }}>
                         <Typography variant="h6" gutterBottom>

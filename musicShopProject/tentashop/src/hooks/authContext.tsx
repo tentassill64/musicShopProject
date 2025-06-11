@@ -8,8 +8,8 @@ type AuthContextType = {
   login: (user: User) => void;
   logout: () => void;
   loading: boolean;
-  updateClient: (updatedUser: User) => void; // Добавляем новый метод
-  setUser: (user: User | null) => void; // Добавляем setUser
+  updateClient: (updatedUser: User) => void;
+  setUser: (user: User | null) => void;
 };
 
 const AuthContext = createContext<AuthContextType>({
@@ -18,8 +18,8 @@ const AuthContext = createContext<AuthContextType>({
   login: () => {},
   logout: () => {},
   loading: true,
-  updateClient: () => {}, // Добавляем дефолтное значение
-  setUser: () => {}, // Добавляем дефолтное значение
+  updateClient: () => {}, 
+  setUser: () => {}, 
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -27,7 +27,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Проверка аутентификации при загрузке
   useEffect(() => {
     const checkAuth = () => {
       const token = localStorage.getItem('authToken');
@@ -64,7 +63,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem('userData');
   };
 
-  // Новый метод для обновления данных клиента
   const updateClient = (updatedUser: User) => {
     setUser(updatedUser);
     localStorage.setItem('userData', JSON.stringify(updatedUser));
@@ -78,7 +76,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       logout, 
       loading,
       updateClient,
-      setUser // Добавляем setUser в контекст
+      setUser 
     }}>
       {children}
     </AuthContext.Provider>

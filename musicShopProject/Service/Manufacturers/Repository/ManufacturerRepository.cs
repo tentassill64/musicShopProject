@@ -20,7 +20,8 @@ public class ManufacturerRepository : IManufacturerRepository
     public void SaveManufacturer(ManufacturerBlank.Validated validatedManufacturerBlank)
     {
         String query = "Insert into manufacturers (id, name, logo, createddatetimeutc, isremoved, country) " +
-            "values(@p_id, @p_name, @p_logo, @p_timeUtcNow, false, @p_country) ON Conflict(id) do Update set name = @p_name, " +
+            "values(@p_id, @p_name, @p_logo, @p_timeUtcNow, false, @p_country) " +
+            "ON Conflict(id) do Update set name = @p_name, " +
             "logo = @p_logo, modifieddatetimeutc = @p_timeUtcNow, country = @p_country";
 
         NpgsqlParameter[] parameters =
@@ -29,7 +30,7 @@ public class ManufacturerRepository : IManufacturerRepository
             new("p_name", validatedManufacturerBlank.Name),
             new("p_logo", validatedManufacturerBlank.Logo),
             new("p_timeUtcNow", DateTime.UtcNow),
-            new("p_country", validatedManufacturerBlank.Country),
+            new("p_country", (int)validatedManufacturerBlank.Country),
         };
 
         _mainConnector.ExecuteNonQuery(query, parameters);
